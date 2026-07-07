@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema\Transforms;
 
 use Rushing\BlockSchema\Contracts\DocumentTransform;

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema\Codegen;
 
 /**
@@ -12,7 +10,7 @@ namespace Rushing\BlockSchema\Codegen;
  */
 class BlockCodegenCache
 {
-    public function __construct(private readonly string $cacheDir) {}
+    public function __construct(private string $cacheDir) {}
 
     /**
      * Write the generated PHP code to cache (if not already present) and load the class.

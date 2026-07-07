@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Rushing\BlockSchema\Contracts\Document;
 use Rushing\BlockSchema\DocumentHydrator;
 use Rushing\BlockSchema\Nodes\GenericNode;

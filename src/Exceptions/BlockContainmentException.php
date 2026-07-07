@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema\Exceptions;
 
 use RuntimeException;
@@ -12,4 +10,4 @@ use RuntimeException;
  * of the category-admission seam (a container admits *by category*; a member
  * declares its category; an illegal child is rejected on write).
  */
-final class BlockContainmentException extends RuntimeException {}
+class BlockContainmentException extends RuntimeException {}

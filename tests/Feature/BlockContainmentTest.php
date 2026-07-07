@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Rushing\BlockSchema\Attributes\NodeType;
 use Rushing\BlockSchema\Blocks\Block;
 use Rushing\BlockSchema\Exceptions\BlockContainmentException;

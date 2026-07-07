@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Rushing\BlockSchema\Contracts\DocumentTransform;
 use Rushing\BlockSchema\TransformPipeline;
 use Rushing\BlockSchema\Transforms\DedupeImagesTransform;

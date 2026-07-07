@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Rushing\BlockSchema\Attributes\NodeAttr;
 use Rushing\BlockSchema\Attributes\NodeType;
 
@@ -11,7 +9,7 @@ it('can be read via reflection from an annotated class', function () {
     {
         public function __construct(
             #[NodeAttr(description: 'Section heading', example: 'The Filming Locations')]
-            public readonly string $heading,
+            public string $heading,
         ) {}
     }
 
@@ -31,7 +29,7 @@ it('can read NodeAttr from a constructor parameter', function () {
     {
         public function __construct(
             #[NodeAttr(description: 'Opening prose', required: true)]
-            public readonly string $prose,
+            public string $prose,
         ) {}
     }
 

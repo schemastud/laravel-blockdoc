@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Rushing\BlockSchema\Attributes\NodeAttr;
 use Rushing\BlockSchema\Attributes\NodeType;
 use Rushing\BlockSchema\Blocks\Block;
@@ -19,11 +17,11 @@ class CodegenCardFixture extends Block
 {
     public function __construct(
         #[NodeAttr(description: 'Card image source URL', required: true)]
-        public readonly string $src,
+        public string $src,
         #[NodeAttr(description: 'Card title', required: true)]
-        public readonly string $title,
+        public string $title,
         #[NodeAttr(description: 'Optional caption text', required: false, default: null)]
-        public readonly ?string $caption = null,
+        public ?string $caption = null,
     ) {}
 }
 
@@ -70,9 +68,9 @@ it('generates valid PHP class code from a fixture JSON Schema', function () {
     expect($code)
         ->toContain('class GeneratedCodegenCard extends Block')
         ->toContain("#[NodeType('codegen_card'")
-        ->toContain('public readonly string $src')
-        ->toContain('public readonly string $title')
-        ->toContain('public readonly ?string $caption');
+        ->toContain('public string $src')
+        ->toContain('public string $title')
+        ->toContain('public ?string $caption');
 });
 
 it('marks required properties as required and optional as not required', function () {
@@ -85,11 +83,11 @@ it('marks required properties as required and optional as not required', functio
     );
 
     // src and title are required → no default value
-    expect($code)->toContain('public readonly string $src')
-        ->toContain('public readonly string $title');
+    expect($code)->toContain('public string $src')
+        ->toContain('public string $title');
 
     // caption is optional → nullable with null default
-    expect($code)->toContain('public readonly ?string $caption = null');
+    expect($code)->toContain('public ?string $caption = null');
 });
 
 // ---------------------------------------------------------------------------

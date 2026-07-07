@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema\Codegen;
 
 /**
@@ -72,7 +70,7 @@ PHP;
             $default = $isRequired ? '' : ' = null';
 
             $nodeAttrArgs = $this->buildNodeAttrArgs($description, $isRequired);
-            $params[] = "        #[NodeAttr({$nodeAttrArgs})]\n        public readonly {$phpType} \${$name}{$default}";
+            $params[] = "        #[NodeAttr({$nodeAttrArgs})]\n        public {$phpType} \${$name}{$default}";
         }
 
         return $params;

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema\Nodes;
 
 use Rushing\BlockSchema\Contracts\Node;
@@ -12,7 +10,7 @@ use Rushing\BlockSchema\Contracts\Node;
  * raw structure losslessly so prose authored in a Tiptap-style editor survives
  * hydrate → serialize without a bespoke DTO per inline node.
  */
-final class GenericNode implements Node
+class GenericNode implements Node
 {
     /**
      * @param  list<Node>  $children
@@ -20,11 +18,11 @@ final class GenericNode implements Node
      * @param  list<array<string, mixed>>  $marks
      */
     public function __construct(
-        private readonly string $type,
-        private readonly array $attrs = [],
-        private readonly array $children = [],
-        private readonly ?string $text = null,
-        private readonly array $marks = [],
+        private string $type,
+        private array $attrs = [],
+        private array $children = [],
+        private ?string $text = null,
+        private array $marks = [],
     ) {}
 
     /**

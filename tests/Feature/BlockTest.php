@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Rushing\BlockSchema\Attributes\NodeAttr;
 use Rushing\BlockSchema\Attributes\NodeType;
 use Rushing\BlockSchema\Blocks\Block;
@@ -11,7 +9,7 @@ class SectionBlockFixture extends Block
 {
     public function __construct(
         #[NodeAttr(description: 'Section heading')]
-        public readonly string $heading,
+        public string $heading,
     ) {}
 }
 

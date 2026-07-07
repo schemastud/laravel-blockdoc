@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema\Rendering;
 
 use Rushing\BlockSchema\Contracts\Node;

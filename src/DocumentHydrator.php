@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema;
 
 use Rushing\BlockSchema\Blocks\Block;
@@ -16,9 +14,9 @@ use Rushing\BlockSchema\Schema\ProseMirrorDocument;
  * ProseMirror doc array back into typed Block Nodes. Spatie Data carries the
  * per-node typed hydration; this class only resolves types and recurses.
  */
-final class DocumentHydrator
+class DocumentHydrator
 {
-    public function __construct(private readonly Schema $schema) {}
+    public function __construct(private Schema $schema) {}
 
     /**
      * @param  array{type?: string, content?: list<array<string, mixed>>}  $doc

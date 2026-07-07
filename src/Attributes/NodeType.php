@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema\Attributes;
 
 use Rushing\BlockSchema\Blocks\Block;
@@ -13,11 +11,11 @@ use Rushing\BlockSchema\Blocks\Block;
  * ({@see Block::admitsChildCategories()}).
  */
 #[\Attribute(\Attribute::TARGET_CLASS)]
-final class NodeType
+class NodeType
 {
     public function __construct(
-        public readonly string $name,
-        public readonly ?string $description = null,
-        public readonly string $group = 'block',
+        public string $name,
+        public ?string $description = null,
+        public string $group = 'block',
     ) {}
 }

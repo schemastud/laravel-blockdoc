@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema;
 
 use Rushing\BlockSchema\Blocks\Block;
@@ -38,7 +36,7 @@ use Rushing\BlockSchema\Schema\ProseMirrorDocument;
 class BlockDocumentBuilder
 {
     public function __construct(
-        private readonly ProseHtmlParser $parser = new ProseHtmlParser,
+        private ProseHtmlParser $parser = new ProseHtmlParser,
     ) {}
 
     /**

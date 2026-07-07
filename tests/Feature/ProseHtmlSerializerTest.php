@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Rushing\BlockSchema\Rendering\ProseHtmlParser;
 use Rushing\BlockSchema\Rendering\ProseHtmlSerializer;
 

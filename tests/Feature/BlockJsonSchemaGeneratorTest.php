@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Rushing\BlockSchema\Attributes\NodeAttr;
 use Rushing\BlockSchema\Attributes\NodeType;
 use Rushing\BlockSchema\Blocks\Block;
@@ -13,15 +11,15 @@ class FaqBlockSchemaFixture extends Block
 {
     public function __construct(
         #[NodeAttr(description: 'The question being answered', example: 'Where was it filmed?')]
-        public readonly string $question,
+        public string $question,
         #[NodeAttr(description: 'The answer', required: false, default: null)]
-        public readonly ?string $answer = null,
+        public ?string $answer = null,
     ) {}
 }
 
 class PlainDataFixture extends Data
 {
-    public function __construct(public readonly string $name) {}
+    public function __construct(public string $name) {}
 }
 
 it('only generates for Block subclasses', function () {

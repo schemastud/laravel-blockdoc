@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rushing\BlockSchema\Schema;
 
 use Rushing\BlockSchema\Attributes\NodeType;
 use Rushing\BlockSchema\Blocks\Block;
 use Rushing\BlockSchema\Contracts\Schema;
 
-final class NodeSchema implements Schema
+class NodeSchema implements Schema
 {
     /** @var array<string, class-string<Block>> */
     private array $map = [];
