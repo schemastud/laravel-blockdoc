@@ -2,7 +2,10 @@
 
 namespace Rushing\BlockSchema;
 
+use Rushing\BlockSchema\Console\ExportManifestCommand;
+use Rushing\BlockSchema\Contracts\ManifestNodeSource;
 use Rushing\BlockSchema\Contracts\Schema;
+use Rushing\BlockSchema\Schema\ManifestBuilder;
 use Rushing\BlockSchema\Schema\NodeSchema;
 use Rushing\BlockSchema\Transforms\DedupeImagesTransform;
 use Rushing\BlockSchema\Transforms\OneLeadVisualTransform;
@@ -14,7 +17,8 @@ class ServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-        $package->name('laravel-block-schema');
+        $package->name('laravel-block-schema')
+            ->hasCommand(ExportManifestCommand::class);
     }
 
     public function registeringPackage(): void
@@ -28,6 +32,13 @@ class ServiceProvider extends PackageServiceProvider
         );
 
         $this->app->singleton(TransformPipeline::class);
+
+        // The manifest builder resolves against the host-bound ManifestNodeSource
+        // (splicewire-editor issue 06); resolving it without one is a host error.
+        $this->app->bind(
+            ManifestBuilder::class,
+            fn ($app) => new ManifestBuilder($app->make(ManifestNodeSource::class)),
+        );
     }
 
     public function bootingPackage(): void
