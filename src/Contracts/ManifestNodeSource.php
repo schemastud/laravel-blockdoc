@@ -22,7 +22,10 @@ interface ManifestNodeSource
     public function profiles(): array;
 
     /**
-     * The `#[NodeType]` Block classes registered for a profile.
+     * The `#[NodeType]` Block classes registered for a profile. A profile whose
+     * vocabulary has a ROOT block (the document itself, e.g. an article) must NOT
+     * list it here — the root maps to the manifest's `doc` entry via
+     * {@see self::docAdmitsFor()}.
      *
      * @return list<class-string<Block>>
      */
@@ -31,6 +34,8 @@ interface ManifestNodeSource
     /**
      * What the profile's document node admits, same semantics as a node's
      * admitsChildCategories: null = unconstrained, [] = leaf, list = category union.
+     * For a vocabulary with a root block this is the root's admitsChildCategories.
+     * Raw category `$id`s are fine — the builder emits their PM-safe slugs.
      *
      * @return list<string>|null
      */

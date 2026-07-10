@@ -2,6 +2,7 @@
 
 namespace Rushing\BlockSchema\Schema;
 
+use Illuminate\Support\Str;
 use ReflectionClass;
 use Rushing\BlockSchema\Attributes\NodeType;
 use Rushing\BlockSchema\Blocks\Block;
@@ -13,6 +14,12 @@ use Rushing\BlockSchema\Contracts\ManifestNodeSource;
  * ProseMirror schema. Per node — name/description/group from `#[NodeType]`,
  * category/admitsChildCategories from the Block, and the attrs JSON Schema from
  * the {@see BlockJsonSchemaGenerator} with `id` always present.
+ *
+ * Category `$id`s are host vocabulary and may be URLs; ProseMirror content
+ * expressions only allow word characters, so the manifest emits a stable PM-safe
+ * slug per category ({@see self::categorySlug()}: last URL path segment,
+ * `-` → `_`) in `category`/`admitsChildCategories`, preserving the raw `$id` as
+ * an additive `categoryId` when it differs.
  *
  * The base prose vocabulary (paragraph/heading/lists + strong/em/code/link marks)
  * is NOT emitted per profile; it is the canonical hand-authored manifest at
@@ -41,7 +48,7 @@ class ManifestBuilder
             'profile' => $profile,
             'version' => self::VERSION,
             'doc' => [
-                'admitsChildCategories' => $this->source->docAdmitsFor($profile),
+                'admitsChildCategories' => $this->categorySlugs($this->source->docAdmitsFor($profile)),
             ],
             'nodes' => array_map(
                 fn (string $class): array => $this->node($class),
@@ -94,16 +101,57 @@ class ManifestBuilder
             $node['description'] = $nodeType->description;
         }
 
-        return $node + [
+        $category = $block->category();
+        $slug = self::categorySlug($category);
+
+        $node += [
             'group' => $nodeType->group,
-            'category' => $block->category(),
-            'admitsChildCategories' => $block->admitsChildCategories(),
+            'category' => $slug,
+        ];
+
+        // Preserve the raw category $id additively when slugging changed it.
+        if ($category !== null && $category !== $slug) {
+            $node['categoryId'] = $category;
+        }
+
+        return $node + [
+            'admitsChildCategories' => $this->categorySlugs($block->admitsChildCategories()),
             // Typed Blocks hold structured children or categories, never raw inline
             // text; the explicit content-expression escape hatch is base-set-only.
             'admitsText' => false,
             'contentExpression' => null,
             'attrsSchema' => $this->attrsSchema($reflection),
         ];
+    }
+
+    /**
+     * The PM-safe slug for a category `$id`: the last URL path segment with `-`
+     * replaced by `_` (content expressions only allow word characters). Stable and
+     * deterministic; a plain non-URL category slugs to itself.
+     */
+    public static function categorySlug(?string $category): ?string
+    {
+        if ($category === null) {
+            return null;
+        }
+
+        return str_replace('-', '_', (string) Str::afterLast(rtrim($category, '/'), '/'));
+    }
+
+    /**
+     * @param  list<string>|null  $categories
+     * @return list<string>|null
+     */
+    protected function categorySlugs(?array $categories): ?array
+    {
+        if ($categories === null) {
+            return null;
+        }
+
+        return array_values(array_map(
+            fn (string $category): string => (string) self::categorySlug($category),
+            $categories,
+        ));
     }
 
     /**

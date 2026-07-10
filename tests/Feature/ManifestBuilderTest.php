@@ -90,7 +90,50 @@ it('emits category and admitsChildCategories from the Block', function () {
         ->and($container['admitsChildCategories'])->toBe(['section'])
         ->and($section['category'])->toBe('section')
         ->and($section['admitsChildCategories'])->toBeNull();
+
+    // A plain category slugs to itself, so no categoryId is repeated.
+    expect($container)->not->toHaveKey('categoryId');
 });
+
+it('emits PM-safe category slugs for URL category $ids and preserves the raw $id as categoryId', function () {
+    $source = new class extends ManifestSourceFixture
+    {
+        public function nodeClassesFor(string $profile): array
+        {
+            return [UrlCategoryBlockFixture::class];
+        }
+
+        public function docAdmitsFor(string $profile): ?array
+        {
+            return ['https://example.test/json-schemas/block-category/content-section'];
+        }
+    };
+
+    $manifest = (new ManifestBuilder($source))->build('fixture');
+    $node = $manifest['nodes'][0];
+
+    // Last URL path segment, '-' → '_': PM content expressions only allow word chars.
+    expect($node['category'])->toBe('content_section')
+        ->and($node['categoryId'])->toBe('https://example.test/json-schemas/block-category/content-section')
+        ->and($node['admitsChildCategories'])->toBe(['nested_thing'])
+        ->and($manifest['doc']['admitsChildCategories'])->toBe(['content_section']);
+});
+
+#[NodeType('url_category_node', 'A node with URL category ids')]
+class UrlCategoryBlockFixture extends Block
+{
+    public function __construct(public string $x = '') {}
+
+    public function category(): ?string
+    {
+        return 'https://example.test/json-schemas/block-category/content-section';
+    }
+
+    public function admitsChildCategories(): ?array
+    {
+        return ['https://example.test/json-schemas/block-category/nested-thing'];
+    }
+}
 
 it('emits admitsText false and contentExpression null for typed Blocks', function () {
     foreach ($this->builder->build('fixture')['nodes'] as $node) {
