@@ -175,8 +175,8 @@ it('ships a canonical base manifest with the base prose vocabulary and marks', f
     expect($base['profile'])->toBe('base')
         ->and($base['version'])->toBe(1)
         ->and(array_column($base['nodes'], 'name'))->toBe([
-            'paragraph', 'heading', 'blockquote', 'bulletList', 'orderedList',
-            'listItem', 'codeBlock', 'horizontalRule', 'hardBreak',
+            'paragraph', 'heading', 'blockquote', 'bullet_list', 'ordered_list',
+            'list_item', 'code_block', 'horizontal_rule', 'hard_break',
         ])
         ->and(array_column($base['marks'], 'name'))->toBe(['strong', 'em', 'code', 'link', 'annotation']);
 
@@ -190,12 +190,12 @@ it('ships a canonical base manifest with the base prose vocabulary and marks', f
     expect($byName['paragraph']['admitsText'])->toBeTrue()
         ->and($byName['heading']['attrsSchema']['properties']['level']['type'])->toBe('integer')
         ->and($byName['blockquote']['admitsChildCategories'])->toBe(['prose'])
-        ->and($byName['bulletList']['admitsChildCategories'])->toBe(['listItem'])
-        ->and($byName['listItem']['category'])->toBe('listItem')
-        ->and($byName['codeBlock']['contentExpression'])->toBe('text*')
-        ->and($byName['horizontalRule']['admitsChildCategories'])->toBe([])
-        ->and($byName['hardBreak']['group'])->toBe('inline')
-        ->and($byName['hardBreak']['category'])->toBeNull();
+        ->and($byName['bullet_list']['admitsChildCategories'])->toBe(['list_item'])
+        ->and($byName['list_item']['category'])->toBe('list_item')
+        ->and($byName['code_block']['contentExpression'])->toBe('text*')
+        ->and($byName['horizontal_rule']['admitsChildCategories'])->toBe([])
+        ->and($byName['hard_break']['group'])->toBe('inline')
+        ->and($byName['hard_break']['category'])->toBeNull();
 
     // The annotation mark allows overlapping same-type marks; link carries href.
     $marks = array_column($base['marks'], null, 'name');
