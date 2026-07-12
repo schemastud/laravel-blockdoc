@@ -1,8 +1,8 @@
 <?php
 
-namespace Schemastud\BlockSchema\Rendering;
+namespace Schemastud\Blockdoc\Rendering;
 
-use Schemastud\BlockSchema\Contracts\Node;
+use Schemastud\Blockdoc\Contracts\Node;
 
 /**
  * Serializes standard ProseMirror prose nodes (paragraph, text + marks, headings,

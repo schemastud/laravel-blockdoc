@@ -1,10 +1,10 @@
 <?php
 
-namespace Schemastud\BlockSchema\Schema;
+namespace Schemastud\Blockdoc\Schema;
 
-use Schemastud\BlockSchema\Attributes\NodeType;
-use Schemastud\BlockSchema\Blocks\Block;
-use Schemastud\BlockSchema\Contracts\Schema;
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Blocks\Block;
+use Schemastud\Blockdoc\Contracts\Schema;
 
 class NodeSchema implements Schema
 {

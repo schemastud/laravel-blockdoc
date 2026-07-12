@@ -1,15 +1,15 @@
 <?php
 
-namespace Schemastud\BlockSchema;
+namespace Schemastud\Blockdoc;
 
-use Schemastud\BlockSchema\Console\ExportManifestCommand;
-use Schemastud\BlockSchema\Contracts\ManifestNodeSource;
-use Schemastud\BlockSchema\Contracts\Schema;
-use Schemastud\BlockSchema\Schema\ManifestBuilder;
-use Schemastud\BlockSchema\Schema\NodeSchema;
-use Schemastud\BlockSchema\Transforms\DedupeImagesTransform;
-use Schemastud\BlockSchema\Transforms\OneLeadVisualTransform;
-use Schemastud\BlockSchema\Transforms\StripConclusionMediaTransform;
+use Schemastud\Blockdoc\Console\ExportManifestCommand;
+use Schemastud\Blockdoc\Contracts\ManifestNodeSource;
+use Schemastud\Blockdoc\Contracts\Schema;
+use Schemastud\Blockdoc\Schema\ManifestBuilder;
+use Schemastud\Blockdoc\Schema\NodeSchema;
+use Schemastud\Blockdoc\Transforms\DedupeImagesTransform;
+use Schemastud\Blockdoc\Transforms\OneLeadVisualTransform;
+use Schemastud\Blockdoc\Transforms\StripConclusionMediaTransform;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -17,7 +17,7 @@ class ServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
-        $package->name('laravel-block-schema')
+        $package->name('laravel-blockdoc')
             ->hasCommand(ExportManifestCommand::class);
     }
 

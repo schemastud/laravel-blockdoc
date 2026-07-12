@@ -1,12 +1,12 @@
 <?php
 
-namespace Schemastud\BlockSchema\Schema;
+namespace Schemastud\Blockdoc\Schema;
 
 use Illuminate\Support\Str;
 use ReflectionClass;
-use Schemastud\BlockSchema\Attributes\NodeType;
-use Schemastud\BlockSchema\Blocks\Block;
-use Schemastud\BlockSchema\Contracts\ManifestNodeSource;
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Blocks\Block;
+use Schemastud\Blockdoc\Contracts\ManifestNodeSource;
 
 /**
  * Builds the node-manifest document for a profile (splicewire-editor issue 06):

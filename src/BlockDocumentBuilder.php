@@ -1,14 +1,14 @@
 <?php
 
-namespace Schemastud\BlockSchema;
+namespace Schemastud\Blockdoc;
 
-use Schemastud\BlockSchema\Blocks\Block;
-use Schemastud\BlockSchema\Contracts\Document;
-use Schemastud\BlockSchema\Contracts\DocumentRenderer;
-use Schemastud\BlockSchema\Contracts\Node;
-use Schemastud\BlockSchema\Contracts\Schema;
-use Schemastud\BlockSchema\Rendering\ProseHtmlParser;
-use Schemastud\BlockSchema\Schema\ProseMirrorDocument;
+use Schemastud\Blockdoc\Blocks\Block;
+use Schemastud\Blockdoc\Contracts\Document;
+use Schemastud\Blockdoc\Contracts\DocumentRenderer;
+use Schemastud\Blockdoc\Contracts\Node;
+use Schemastud\Blockdoc\Contracts\Schema;
+use Schemastud\Blockdoc\Rendering\ProseHtmlParser;
+use Schemastud\Blockdoc\Schema\ProseMirrorDocument;
 
 /**
  * Assembles a typed block document from the structured shape produced by the

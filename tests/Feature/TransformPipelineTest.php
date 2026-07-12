@@ -1,10 +1,10 @@
 <?php
 
-use Schemastud\BlockSchema\Contracts\DocumentTransform;
-use Schemastud\BlockSchema\TransformPipeline;
-use Schemastud\BlockSchema\Transforms\DedupeImagesTransform;
-use Schemastud\BlockSchema\Transforms\OneLeadVisualTransform;
-use Schemastud\BlockSchema\Transforms\StripConclusionMediaTransform;
+use Schemastud\Blockdoc\Contracts\DocumentTransform;
+use Schemastud\Blockdoc\TransformPipeline;
+use Schemastud\Blockdoc\Transforms\DedupeImagesTransform;
+use Schemastud\Blockdoc\Transforms\OneLeadVisualTransform;
+use Schemastud\Blockdoc\Transforms\StripConclusionMediaTransform;
 
 it('passes input through unchanged when no transforms are registered', function () {
     $pipeline = new TransformPipeline;

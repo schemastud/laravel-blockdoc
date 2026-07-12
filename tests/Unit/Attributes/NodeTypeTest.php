@@ -1,7 +1,7 @@
 <?php
 
-use Schemastud\BlockSchema\Attributes\NodeAttr;
-use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\Blockdoc\Attributes\NodeAttr;
+use Schemastud\Blockdoc\Attributes\NodeType;
 
 it('can be read via reflection from an annotated class', function () {
     #[NodeType('section', 'A body section')]

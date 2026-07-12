@@ -1,9 +1,9 @@
 <?php
 
-use Schemastud\BlockSchema\Contracts\Document;
-use Schemastud\BlockSchema\DocumentHydrator;
-use Schemastud\BlockSchema\Nodes\GenericNode;
-use Schemastud\BlockSchema\Schema\NodeSchema;
+use Schemastud\Blockdoc\Contracts\Document;
+use Schemastud\Blockdoc\DocumentHydrator;
+use Schemastud\Blockdoc\Nodes\GenericNode;
+use Schemastud\Blockdoc\Schema\NodeSchema;
 
 beforeEach(function () {
     $this->schema = new NodeSchema;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Schemastud\BlockSchema\Rendering;
+namespace Schemastud\Blockdoc\Rendering;
 
 use DOMElement;
 use DOMNode;
 use DOMText;
-use Schemastud\BlockSchema\Contracts\Node;
-use Schemastud\BlockSchema\Nodes\GenericNode;
+use Schemastud\Blockdoc\Contracts\Node;
+use Schemastud\Blockdoc\Nodes\GenericNode;
 
 /**
  * Parses an HTML prose fragment into ProseMirror prose Nodes — the inverse of

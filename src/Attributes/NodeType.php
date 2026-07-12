@@ -1,8 +1,8 @@
 <?php
 
-namespace Schemastud\BlockSchema\Attributes;
+namespace Schemastud\Blockdoc\Attributes;
 
-use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\Blockdoc\Blocks\Block;
 
 /**
  * Declares a block's ProseMirror node type. The former `content` expression

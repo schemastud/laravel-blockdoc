@@ -1,12 +1,12 @@
 <?php
 
-use Schemastud\BlockSchema\Attributes\NodeAttr;
-use Schemastud\BlockSchema\Attributes\NodeType;
-use Schemastud\BlockSchema\Blocks\Block;
-use Schemastud\BlockSchema\Codegen\BlockClassGenerator;
-use Schemastud\BlockSchema\Codegen\BlockCodegenCache;
-use Schemastud\BlockSchema\DocumentHydrator;
-use Schemastud\BlockSchema\Schema\NodeSchema;
+use Schemastud\Blockdoc\Attributes\NodeAttr;
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Blocks\Block;
+use Schemastud\Blockdoc\Codegen\BlockClassGenerator;
+use Schemastud\Blockdoc\Codegen\BlockCodegenCache;
+use Schemastud\Blockdoc\DocumentHydrator;
+use Schemastud\Blockdoc\Schema\NodeSchema;
 
 // ---------------------------------------------------------------------------
 // Hand-authored equivalent — the parity baseline

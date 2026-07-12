@@ -1,13 +1,13 @@
 <?php
 
-use Schemastud\BlockSchema\Attributes\NodeAttr;
-use Schemastud\BlockSchema\Attributes\NodeType;
-use Schemastud\BlockSchema\Blocks\Block;
-use Schemastud\BlockSchema\Schema\BlockJsonSchemaGenerator;
+use Schemastud\Blockdoc\Attributes\NodeAttr;
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Blocks\Block;
+use Schemastud\Blockdoc\Schema\BlockJsonSchemaGenerator;
 use Spatie\LaravelData\Data;
 
 #[NodeType('faq', 'A frequently-asked-question entry')]
-class FaqBlockSchemaFixture extends Block
+class FaqBlockdocFixture extends Block
 {
     public function __construct(
         #[NodeAttr(description: 'The question being answered', example: 'Where was it filmed?')]
@@ -25,12 +25,12 @@ class PlainDataFixture extends Data
 it('only generates for Block subclasses', function () {
     $generator = new BlockJsonSchemaGenerator;
 
-    expect($generator->canGenerate(new ReflectionClass(FaqBlockSchemaFixture::class)))->toBeTrue()
+    expect($generator->canGenerate(new ReflectionClass(FaqBlockdocFixture::class)))->toBeTrue()
         ->and($generator->canGenerate(new ReflectionClass(PlainDataFixture::class)))->toBeFalse();
 });
 
 it('uses the #[NodeType] description as the schema description', function () {
-    $schema = (new BlockJsonSchemaGenerator)->generate(new ReflectionClass(FaqBlockSchemaFixture::class));
+    $schema = (new BlockJsonSchemaGenerator)->generate(new ReflectionClass(FaqBlockdocFixture::class));
 
     expect($schema['type'])->toBe('object')
         ->and($schema['description'])->toBe('A frequently-asked-question entry')
@@ -38,7 +38,7 @@ it('uses the #[NodeType] description as the schema description', function () {
 });
 
 it('bridges #[NodeAttr] description and example onto properties', function () {
-    $schema = (new BlockJsonSchemaGenerator)->generate(new ReflectionClass(FaqBlockSchemaFixture::class));
+    $schema = (new BlockJsonSchemaGenerator)->generate(new ReflectionClass(FaqBlockdocFixture::class));
 
     expect($schema['properties']['question']['description'])->toBe('The question being answered')
         ->and($schema['properties']['question']['examples'])->toBe(['Where was it filmed?'])
@@ -46,7 +46,7 @@ it('bridges #[NodeAttr] description and example onto properties', function () {
 });
 
 it('honors #[NodeAttr] required to compute the required list', function () {
-    $schema = (new BlockJsonSchemaGenerator)->generate(new ReflectionClass(FaqBlockSchemaFixture::class));
+    $schema = (new BlockJsonSchemaGenerator)->generate(new ReflectionClass(FaqBlockdocFixture::class));
 
     expect($schema['required'])->toContain('question')
         ->and($schema['required'] ?? [])->not->toContain('answer');

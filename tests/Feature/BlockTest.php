@@ -1,8 +1,8 @@
 <?php
 
-use Schemastud\BlockSchema\Attributes\NodeAttr;
-use Schemastud\BlockSchema\Attributes\NodeType;
-use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\Blockdoc\Attributes\NodeAttr;
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Blocks\Block;
 
 #[NodeType('section', 'A body section')]
 class SectionBlockFixture extends Block

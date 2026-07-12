@@ -1,6 +1,6 @@
 <?php
 
-namespace Schemastud\BlockSchema;
+namespace Schemastud\Blockdoc;
 
 /**
  * The node-id round-trip safety net (splicewire-editor issue 09). LLM revision

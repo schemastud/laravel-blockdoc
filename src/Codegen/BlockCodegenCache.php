@@ -1,6 +1,6 @@
 <?php
 
-namespace Schemastud\BlockSchema\Codegen;
+namespace Schemastud\Blockdoc\Codegen;
 
 /**
  * Writes generated Block class PHP code to a cache directory and loads it.

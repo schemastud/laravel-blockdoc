@@ -1,10 +1,10 @@
 <?php
 
-namespace Schemastud\BlockSchema\Console;
+namespace Schemastud\Blockdoc\Console;
 
 use Illuminate\Console\Command;
-use Schemastud\BlockSchema\Contracts\ManifestNodeSource;
-use Schemastud\BlockSchema\Schema\ManifestBuilder;
+use Schemastud\Blockdoc\Contracts\ManifestNodeSource;
+use Schemastud\Blockdoc\Schema\ManifestBuilder;
 
 /**
  * Export the node manifest for a profile as pretty JSON — the server half of the
@@ -14,7 +14,7 @@ use Schemastud\BlockSchema\Schema\ManifestBuilder;
  */
 class ExportManifestCommand extends Command
 {
-    protected $signature = 'block-schema:export-manifest
+    protected $signature = 'blockdoc:export-manifest
         {profile : The manifest profile to export (e.g. content, base)}
         {--path= : Write the manifest JSON to this file instead of stdout}';
 

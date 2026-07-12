@@ -1,6 +1,6 @@
 <?php
 
-namespace Schemastud\BlockSchema\Contracts;
+namespace Schemastud\Blockdoc\Contracts;
 
 interface DocumentTransform
 {

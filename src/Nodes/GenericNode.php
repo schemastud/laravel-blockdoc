@@ -1,8 +1,8 @@
 <?php
 
-namespace Schemastud\BlockSchema\Nodes;
+namespace Schemastud\Blockdoc\Nodes;
 
-use Schemastud\BlockSchema\Contracts\Node;
+use Schemastud\Blockdoc\Contracts\Node;
 
 /**
  * A faithful passthrough for standard ProseMirror nodes (paragraph, text,

@@ -1,8 +1,8 @@
 <?php
 
-use Schemastud\BlockSchema\Contracts\Schema;
-use Schemastud\BlockSchema\DocumentHydrator;
-use Schemastud\BlockSchema\Schema\NodeSchema;
+use Schemastud\Blockdoc\Contracts\Schema;
+use Schemastud\Blockdoc\DocumentHydrator;
+use Schemastud\Blockdoc\Schema\NodeSchema;
 
 it('binds the Schema as a shared singleton', function () {
     expect(app(Schema::class))

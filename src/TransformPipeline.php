@@ -1,8 +1,8 @@
 <?php
 
-namespace Schemastud\BlockSchema;
+namespace Schemastud\Blockdoc;
 
-use Schemastud\BlockSchema\Contracts\DocumentTransform;
+use Schemastud\Blockdoc\Contracts\DocumentTransform;
 
 /**
  * Ordered registry of {@see DocumentTransform} class-strings. Structural transforms are

@@ -1,6 +1,6 @@
 <?php
 
-namespace Schemastud\BlockSchema\Exceptions;
+namespace Schemastud\Blockdoc\Exceptions;
 
 use RuntimeException;
 

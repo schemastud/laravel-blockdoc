@@ -1,10 +1,10 @@
 <?php
 
-use Schemastud\BlockSchema\Attributes\NodeAttr;
-use Schemastud\BlockSchema\Attributes\NodeType;
-use Schemastud\BlockSchema\Blocks\Block;
-use Schemastud\BlockSchema\Contracts\ManifestNodeSource;
-use Schemastud\BlockSchema\Schema\ManifestBuilder;
+use Schemastud\Blockdoc\Attributes\NodeAttr;
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Blocks\Block;
+use Schemastud\Blockdoc\Contracts\ManifestNodeSource;
+use Schemastud\Blockdoc\Schema\ManifestBuilder;
 
 #[NodeType('manifest_section', 'A manifest section fixture')]
 class ManifestSectionBlockFixture extends Block

@@ -1,6 +1,6 @@
 <?php
 
-namespace Schemastud\BlockSchema\Contracts;
+namespace Schemastud\Blockdoc\Contracts;
 
 /**
  * The render seam — a bare interface, not a format-keyed registry. Each output

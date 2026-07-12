@@ -1,7 +1,7 @@
 <?php
 
-use Schemastud\BlockSchema\Rendering\ProseHtmlParser;
-use Schemastud\BlockSchema\Rendering\ProseHtmlSerializer;
+use Schemastud\Blockdoc\Rendering\ProseHtmlParser;
+use Schemastud\Blockdoc\Rendering\ProseHtmlSerializer;
 
 function proseRoundtrip(string $html): string
 {

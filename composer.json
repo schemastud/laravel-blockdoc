@@ -1,5 +1,5 @@
 {
-    "name": "schemastud/laravel-block-schema",
+    "name": "schemastud/laravel-blockdoc",
     "description": "A faithful ProseMirror document model for Laravel (Node/Document/Schema) plus a Spatie Data Block base class. Define your node types as Block subclasses; round-trip ProseMirror JSON.",
     "type": "library",
     "license": "MIT",
@@ -28,18 +28,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Schemastud\\BlockSchema\\": "src/"
+            "Schemastud\\Blockdoc\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Schemastud\\BlockSchema\\Tests\\": "tests/"
+            "Schemastud\\Blockdoc\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Schemastud\\BlockSchema\\ServiceProvider"
+                "Schemastud\\Blockdoc\\ServiceProvider"
             ]
         }
     },

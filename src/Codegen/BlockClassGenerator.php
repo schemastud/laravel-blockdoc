@@ -1,6 +1,6 @@
 <?php
 
-namespace Schemastud\BlockSchema\Codegen;
+namespace Schemastud\Blockdoc\Codegen;
 
 /**
  * Compiles a node JSON Schema into a PHP source string for a named `Block` subclass.
@@ -42,9 +42,9 @@ class BlockClassGenerator
 
 declare(strict_types=1);
 
-{$namespaceLine}use Schemastud\BlockSchema\Attributes\NodeAttr;
-use Schemastud\BlockSchema\Attributes\NodeType;
-use Schemastud\BlockSchema\Blocks\Block;
+{$namespaceLine}use Schemastud\Blockdoc\Attributes\NodeAttr;
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Blocks\Block;
 
 #[NodeType({$nodeTypeArgs})]
 class {$className} extends Block

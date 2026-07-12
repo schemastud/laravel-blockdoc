@@ -1,16 +1,16 @@
 <?php
 
-namespace Schemastud\BlockSchema\Contracts;
+namespace Schemastud\Blockdoc\Contracts;
 
-use Schemastud\BlockSchema\Blocks\Block;
-use Schemastud\BlockSchema\Schema\ManifestBuilder;
+use Schemastud\Blockdoc\Blocks\Block;
+use Schemastud\Blockdoc\Schema\ManifestBuilder;
 
 /**
  * The host's declaration of which Block classes make up each manifest profile.
  * The package walks `#[NodeType]` Blocks; only the host knows which Blocks belong
  * to which editing profile (and what the profile's document admits), so hosts
  * bind this contract and the {@see ManifestBuilder}
- * / `block-schema:export-manifest` consume it.
+ * / `blockdoc:export-manifest` consume it.
  */
 interface ManifestNodeSource
 {

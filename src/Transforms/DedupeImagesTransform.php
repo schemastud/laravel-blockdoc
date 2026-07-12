@@ -1,8 +1,8 @@
 <?php
 
-namespace Schemastud\BlockSchema\Transforms;
+namespace Schemastud\Blockdoc\Transforms;
 
-use Schemastud\BlockSchema\Contracts\DocumentTransform;
+use Schemastud\Blockdoc\Contracts\DocumentTransform;
 
 class DedupeImagesTransform implements DocumentTransform
 {

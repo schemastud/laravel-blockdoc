@@ -1,6 +1,6 @@
 <?php
 
-namespace Schemastud\BlockSchema\Attributes;
+namespace Schemastud\Blockdoc\Attributes;
 
 #[\Attribute(\Attribute::TARGET_PARAMETER | \Attribute::TARGET_PROPERTY)]
 class NodeAttr

@@ -1,16 +1,16 @@
 <?php
 
-namespace Schemastud\BlockSchema\Schema;
+namespace Schemastud\Blockdoc\Schema;
 
 use ReflectionClass;
 use ReflectionProperty;
-use Schemastud\BlockSchema\Attributes\NodeAttr;
-use Schemastud\BlockSchema\Attributes\NodeType;
-use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\Blockdoc\Attributes\NodeAttr;
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Blocks\Block;
 use Schemastud\DataSchemas\Generators\JsonSchemaGenerator;
 
 /**
- * A laravel-data-schemas generator that understands the block-schema model:
+ * A laravel-data-schemas generator that understands the blockdoc model:
  * it bridges `#[NodeType]` (class description) and `#[NodeAttr]` (property
  * description / example / required) into the emitted JSON Schema, so a Block's
  * native authoring metadata drives LLM structured-output schemas.

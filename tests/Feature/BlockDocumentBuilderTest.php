@@ -1,12 +1,12 @@
 <?php
 
-use Schemastud\BlockSchema\Attributes\NodeAttr;
-use Schemastud\BlockSchema\Attributes\NodeType;
-use Schemastud\BlockSchema\BlockDocumentBuilder;
-use Schemastud\BlockSchema\Blocks\Block;
-use Schemastud\BlockSchema\Contracts\Document;
-use Schemastud\BlockSchema\Contracts\DocumentRenderer;
-use Schemastud\BlockSchema\Contracts\Schema;
+use Schemastud\Blockdoc\Attributes\NodeAttr;
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\BlockDocumentBuilder;
+use Schemastud\Blockdoc\Blocks\Block;
+use Schemastud\Blockdoc\Contracts\Document;
+use Schemastud\Blockdoc\Contracts\DocumentRenderer;
+use Schemastud\Blockdoc\Contracts\Schema;
 
 #[NodeType('opening', 'Opening block fixture')]
 class OpeningBlockFixture extends Block {}

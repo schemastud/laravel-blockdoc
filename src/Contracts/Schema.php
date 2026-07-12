@@ -1,8 +1,8 @@
 <?php
 
-namespace Schemastud\BlockSchema\Contracts;
+namespace Schemastud\Blockdoc\Contracts;
 
-use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\Blockdoc\Blocks\Block;
 
 /**
  * The node-type registry. The app populates it; the DocumentHydrator reads it.
