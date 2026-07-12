@@ -1,13 +1,13 @@
 <?php
 
-namespace Rushing\BlockSchema\Schema;
+namespace Schemastud\BlockSchema\Schema;
 
 use ReflectionClass;
 use ReflectionProperty;
-use Rushing\BlockSchema\Attributes\NodeAttr;
-use Rushing\BlockSchema\Attributes\NodeType;
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\LaravelDataSchemas\Generators\JsonSchemaGenerator;
+use Schemastud\BlockSchema\Attributes\NodeAttr;
+use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\DataSchemas\Generators\JsonSchemaGenerator;
 
 /**
  * A laravel-data-schemas generator that understands the block-schema model:

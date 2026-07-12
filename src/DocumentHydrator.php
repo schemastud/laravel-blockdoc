@@ -1,13 +1,13 @@
 <?php
 
-namespace Rushing\BlockSchema;
+namespace Schemastud\BlockSchema;
 
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\BlockSchema\Contracts\Document;
-use Rushing\BlockSchema\Contracts\Node;
-use Rushing\BlockSchema\Contracts\Schema;
-use Rushing\BlockSchema\Nodes\GenericNode;
-use Rushing\BlockSchema\Schema\ProseMirrorDocument;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Contracts\Document;
+use Schemastud\BlockSchema\Contracts\Node;
+use Schemastud\BlockSchema\Contracts\Schema;
+use Schemastud\BlockSchema\Nodes\GenericNode;
+use Schemastud\BlockSchema\Schema\ProseMirrorDocument;
 
 /**
  * The reverse of Document::toArray(): a recursive tree-walker that turns a

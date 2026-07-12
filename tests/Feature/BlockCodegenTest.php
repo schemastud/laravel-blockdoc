@@ -1,12 +1,12 @@
 <?php
 
-use Rushing\BlockSchema\Attributes\NodeAttr;
-use Rushing\BlockSchema\Attributes\NodeType;
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\BlockSchema\Codegen\BlockClassGenerator;
-use Rushing\BlockSchema\Codegen\BlockCodegenCache;
-use Rushing\BlockSchema\DocumentHydrator;
-use Rushing\BlockSchema\Schema\NodeSchema;
+use Schemastud\BlockSchema\Attributes\NodeAttr;
+use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Codegen\BlockClassGenerator;
+use Schemastud\BlockSchema\Codegen\BlockCodegenCache;
+use Schemastud\BlockSchema\DocumentHydrator;
+use Schemastud\BlockSchema\Schema\NodeSchema;
 
 // ---------------------------------------------------------------------------
 // Hand-authored equivalent — the parity baseline

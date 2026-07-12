@@ -1,6 +1,6 @@
 <?php
 
-use Rushing\BlockSchema\NodeIdRematcher;
+use Schemastud\BlockSchema\NodeIdRematcher;
 
 function rematchParagraph(?string $id, string $text): array
 {

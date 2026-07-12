@@ -1,6 +1,6 @@
 <?php
 
-namespace Rushing\BlockSchema\Contracts;
+namespace Schemastud\BlockSchema\Contracts;
 
 /**
  * The render seam — a bare interface, not a format-keyed registry. Each output

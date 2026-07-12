@@ -1,6 +1,6 @@
 <?php
 
-namespace Rushing\BlockSchema\Exceptions;
+namespace Schemastud\BlockSchema\Exceptions;
 
 use RuntimeException;
 

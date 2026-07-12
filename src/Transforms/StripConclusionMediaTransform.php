@@ -1,8 +1,8 @@
 <?php
 
-namespace Rushing\BlockSchema\Transforms;
+namespace Schemastud\BlockSchema\Transforms;
 
-use Rushing\BlockSchema\Contracts\DocumentTransform;
+use Schemastud\BlockSchema\Contracts\DocumentTransform;
 
 class StripConclusionMediaTransform implements DocumentTransform
 {

@@ -1,8 +1,8 @@
 <?php
 
-use Rushing\BlockSchema\Attributes\NodeType;
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\BlockSchema\Exceptions\BlockContainmentException;
+use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Exceptions\BlockContainmentException;
 
 /**
  * Block containment expressed as category admission (replacing the retired, inert

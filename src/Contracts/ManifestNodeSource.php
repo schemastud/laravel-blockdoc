@@ -1,9 +1,9 @@
 <?php
 
-namespace Rushing\BlockSchema\Contracts;
+namespace Schemastud\BlockSchema\Contracts;
 
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\BlockSchema\Schema\ManifestBuilder;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Schema\ManifestBuilder;
 
 /**
  * The host's declaration of which Block classes make up each manifest profile.

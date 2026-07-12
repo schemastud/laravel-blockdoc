@@ -1,7 +1,7 @@
 <?php
 
-use Rushing\BlockSchema\Attributes\NodeAttr;
-use Rushing\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\Attributes\NodeAttr;
+use Schemastud\BlockSchema\Attributes\NodeType;
 
 it('can be read via reflection from an annotated class', function () {
     #[NodeType('section', 'A body section')]

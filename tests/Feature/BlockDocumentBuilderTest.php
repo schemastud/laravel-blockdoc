@@ -1,12 +1,12 @@
 <?php
 
-use Rushing\BlockSchema\Attributes\NodeAttr;
-use Rushing\BlockSchema\Attributes\NodeType;
-use Rushing\BlockSchema\BlockDocumentBuilder;
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\BlockSchema\Contracts\Document;
-use Rushing\BlockSchema\Contracts\DocumentRenderer;
-use Rushing\BlockSchema\Contracts\Schema;
+use Schemastud\BlockSchema\Attributes\NodeAttr;
+use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\BlockDocumentBuilder;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Contracts\Document;
+use Schemastud\BlockSchema\Contracts\DocumentRenderer;
+use Schemastud\BlockSchema\Contracts\Schema;
 
 #[NodeType('opening', 'Opening block fixture')]
 class OpeningBlockFixture extends Block {}

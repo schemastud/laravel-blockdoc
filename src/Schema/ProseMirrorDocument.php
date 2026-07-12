@@ -1,9 +1,9 @@
 <?php
 
-namespace Rushing\BlockSchema\Schema;
+namespace Schemastud\BlockSchema\Schema;
 
-use Rushing\BlockSchema\Contracts\Document;
-use Rushing\BlockSchema\Contracts\Node;
+use Schemastud\BlockSchema\Contracts\Document;
+use Schemastud\BlockSchema\Contracts\Node;
 
 class ProseMirrorDocument implements Document
 {

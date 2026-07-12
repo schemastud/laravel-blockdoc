@@ -1,8 +1,8 @@
 <?php
 
-namespace Rushing\BlockSchema;
+namespace Schemastud\BlockSchema;
 
-use Rushing\BlockSchema\Contracts\DocumentTransform;
+use Schemastud\BlockSchema\Contracts\DocumentTransform;
 
 /**
  * Ordered registry of {@see DocumentTransform} class-strings. Structural transforms are

@@ -1,9 +1,9 @@
 <?php
 
-namespace Rushing\BlockSchema\Tests;
+namespace Schemastud\BlockSchema\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Rushing\BlockSchema\ServiceProvider;
+use Schemastud\BlockSchema\ServiceProvider;
 use Spatie\LaravelData\LaravelDataServiceProvider;
 
 abstract class TestCase extends Orchestra

@@ -1,7 +1,7 @@
 <?php
 
-use Rushing\BlockSchema\Rendering\ProseHtmlParser;
-use Rushing\BlockSchema\Rendering\ProseHtmlSerializer;
+use Schemastud\BlockSchema\Rendering\ProseHtmlParser;
+use Schemastud\BlockSchema\Rendering\ProseHtmlSerializer;
 
 function proseRoundtrip(string $html): string
 {

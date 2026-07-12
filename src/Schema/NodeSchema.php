@@ -1,10 +1,10 @@
 <?php
 
-namespace Rushing\BlockSchema\Schema;
+namespace Schemastud\BlockSchema\Schema;
 
-use Rushing\BlockSchema\Attributes\NodeType;
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\BlockSchema\Contracts\Schema;
+use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Contracts\Schema;
 
 class NodeSchema implements Schema
 {

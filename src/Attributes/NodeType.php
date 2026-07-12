@@ -1,8 +1,8 @@
 <?php
 
-namespace Rushing\BlockSchema\Attributes;
+namespace Schemastud\BlockSchema\Attributes;
 
-use Rushing\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Blocks\Block;
 
 /**
  * Declares a block's ProseMirror node type. The former `content` expression

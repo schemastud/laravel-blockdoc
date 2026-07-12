@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Artisan;
-use Rushing\BlockSchema\Contracts\ManifestNodeSource;
+use Schemastud\BlockSchema\Contracts\ManifestNodeSource;
 
 it('exports a bound profile manifest as pretty JSON to stdout', function () {
     app()->instance(ManifestNodeSource::class, new ManifestSourceFixture);

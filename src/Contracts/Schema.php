@@ -1,8 +1,8 @@
 <?php
 
-namespace Rushing\BlockSchema\Contracts;
+namespace Schemastud\BlockSchema\Contracts;
 
-use Rushing\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Blocks\Block;
 
 /**
  * The node-type registry. The app populates it; the DocumentHydrator reads it.

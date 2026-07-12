@@ -1,8 +1,8 @@
 <?php
 
-namespace Rushing\BlockSchema\Nodes;
+namespace Schemastud\BlockSchema\Nodes;
 
-use Rushing\BlockSchema\Contracts\Node;
+use Schemastud\BlockSchema\Contracts\Node;
 
 /**
  * A faithful passthrough for standard ProseMirror nodes (paragraph, text,

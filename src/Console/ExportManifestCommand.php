@@ -1,10 +1,10 @@
 <?php
 
-namespace Rushing\BlockSchema\Console;
+namespace Schemastud\BlockSchema\Console;
 
 use Illuminate\Console\Command;
-use Rushing\BlockSchema\Contracts\ManifestNodeSource;
-use Rushing\BlockSchema\Schema\ManifestBuilder;
+use Schemastud\BlockSchema\Contracts\ManifestNodeSource;
+use Schemastud\BlockSchema\Schema\ManifestBuilder;
 
 /**
  * Export the node manifest for a profile as pretty JSON — the server half of the

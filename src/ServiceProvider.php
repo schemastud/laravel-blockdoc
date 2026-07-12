@@ -1,15 +1,15 @@
 <?php
 
-namespace Rushing\BlockSchema;
+namespace Schemastud\BlockSchema;
 
-use Rushing\BlockSchema\Console\ExportManifestCommand;
-use Rushing\BlockSchema\Contracts\ManifestNodeSource;
-use Rushing\BlockSchema\Contracts\Schema;
-use Rushing\BlockSchema\Schema\ManifestBuilder;
-use Rushing\BlockSchema\Schema\NodeSchema;
-use Rushing\BlockSchema\Transforms\DedupeImagesTransform;
-use Rushing\BlockSchema\Transforms\OneLeadVisualTransform;
-use Rushing\BlockSchema\Transforms\StripConclusionMediaTransform;
+use Schemastud\BlockSchema\Console\ExportManifestCommand;
+use Schemastud\BlockSchema\Contracts\ManifestNodeSource;
+use Schemastud\BlockSchema\Contracts\Schema;
+use Schemastud\BlockSchema\Schema\ManifestBuilder;
+use Schemastud\BlockSchema\Schema\NodeSchema;
+use Schemastud\BlockSchema\Transforms\DedupeImagesTransform;
+use Schemastud\BlockSchema\Transforms\OneLeadVisualTransform;
+use Schemastud\BlockSchema\Transforms\StripConclusionMediaTransform;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

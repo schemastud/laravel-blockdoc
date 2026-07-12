@@ -1,8 +1,8 @@
 <?php
 
-use Rushing\BlockSchema\Attributes\NodeAttr;
-use Rushing\BlockSchema\Attributes\NodeType;
-use Rushing\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Attributes\NodeAttr;
+use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\Blocks\Block;
 
 #[NodeType('section', 'A body section')]
 class SectionBlockFixture extends Block

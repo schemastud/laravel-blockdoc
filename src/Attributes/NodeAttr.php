@@ -1,6 +1,6 @@
 <?php
 
-namespace Rushing\BlockSchema\Attributes;
+namespace Schemastud\BlockSchema\Attributes;
 
 #[\Attribute(\Attribute::TARGET_PARAMETER | \Attribute::TARGET_PROPERTY)]
 class NodeAttr

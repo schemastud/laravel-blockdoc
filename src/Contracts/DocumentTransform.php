@@ -1,6 +1,6 @@
 <?php
 
-namespace Rushing\BlockSchema\Contracts;
+namespace Schemastud\BlockSchema\Contracts;
 
 interface DocumentTransform
 {

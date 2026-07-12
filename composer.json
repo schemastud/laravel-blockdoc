@@ -1,5 +1,5 @@
 {
-    "name": "rushing/laravel-block-schema",
+    "name": "schemastud/laravel-block-schema",
     "description": "A faithful ProseMirror document model for Laravel (Node/Document/Schema) plus a Spatie Data Block base class. Define your node types as Block subclasses; round-trip ProseMirror JSON.",
     "type": "library",
     "license": "MIT",
@@ -14,32 +14,32 @@
         "orchestra/testbench": "^10.0",
         "pestphp/pest": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.0",
-        "rushing/laravel-data-schemas": "^1.0",
+        "schemastud/laravel-data-schemas": "^1.0",
         "laravel/pint": "^1.0"
     },
     "suggest": {
-        "rushing/laravel-data-schemas": "Emit JSON Schema for Block subclasses (BlockJsonSchemaGenerator) for LLM structured output."
+        "schemastud/laravel-data-schemas": "Emit JSON Schema for Block subclasses (BlockJsonSchemaGenerator) for LLM structured output."
     },
     "repositories": {
         "laravel-data-schemas": {
             "type": "vcs",
-            "url": "https://github.com/stephenr85/laravel-data-schemas.git"
+            "url": "https://github.com/schemastud/laravel-data-schemas.git"
         }
     },
     "autoload": {
         "psr-4": {
-            "Rushing\\BlockSchema\\": "src/"
+            "Schemastud\\BlockSchema\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Rushing\\BlockSchema\\Tests\\": "tests/"
+            "Schemastud\\BlockSchema\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Rushing\\BlockSchema\\ServiceProvider"
+                "Schemastud\\BlockSchema\\ServiceProvider"
             ]
         }
     },

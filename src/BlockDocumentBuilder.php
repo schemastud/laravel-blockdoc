@@ -1,14 +1,14 @@
 <?php
 
-namespace Rushing\BlockSchema;
+namespace Schemastud\BlockSchema;
 
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\BlockSchema\Contracts\Document;
-use Rushing\BlockSchema\Contracts\DocumentRenderer;
-use Rushing\BlockSchema\Contracts\Node;
-use Rushing\BlockSchema\Contracts\Schema;
-use Rushing\BlockSchema\Rendering\ProseHtmlParser;
-use Rushing\BlockSchema\Schema\ProseMirrorDocument;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Contracts\Document;
+use Schemastud\BlockSchema\Contracts\DocumentRenderer;
+use Schemastud\BlockSchema\Contracts\Node;
+use Schemastud\BlockSchema\Contracts\Schema;
+use Schemastud\BlockSchema\Rendering\ProseHtmlParser;
+use Schemastud\BlockSchema\Schema\ProseMirrorDocument;
 
 /**
  * Assembles a typed block document from the structured shape produced by the

@@ -1,11 +1,11 @@
 <?php
 
-namespace Rushing\BlockSchema\Blocks;
+namespace Schemastud\BlockSchema\Blocks;
 
 use Illuminate\Support\Str;
-use Rushing\BlockSchema\Attributes\NodeType;
-use Rushing\BlockSchema\Contracts\Node;
-use Rushing\BlockSchema\Exceptions\BlockContainmentException;
+use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\Contracts\Node;
+use Schemastud\BlockSchema\Exceptions\BlockContainmentException;
 use Spatie\LaravelData\Data;
 
 /**

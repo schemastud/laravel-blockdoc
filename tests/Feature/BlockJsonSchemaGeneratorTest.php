@@ -1,9 +1,9 @@
 <?php
 
-use Rushing\BlockSchema\Attributes\NodeAttr;
-use Rushing\BlockSchema\Attributes\NodeType;
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\BlockSchema\Schema\BlockJsonSchemaGenerator;
+use Schemastud\BlockSchema\Attributes\NodeAttr;
+use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Schema\BlockJsonSchemaGenerator;
 use Spatie\LaravelData\Data;
 
 #[NodeType('faq', 'A frequently-asked-question entry')]

@@ -1,10 +1,10 @@
 <?php
 
-use Rushing\BlockSchema\Attributes\NodeAttr;
-use Rushing\BlockSchema\Attributes\NodeType;
-use Rushing\BlockSchema\Blocks\Block;
-use Rushing\BlockSchema\Contracts\ManifestNodeSource;
-use Rushing\BlockSchema\Schema\ManifestBuilder;
+use Schemastud\BlockSchema\Attributes\NodeAttr;
+use Schemastud\BlockSchema\Attributes\NodeType;
+use Schemastud\BlockSchema\Blocks\Block;
+use Schemastud\BlockSchema\Contracts\ManifestNodeSource;
+use Schemastud\BlockSchema\Schema\ManifestBuilder;
 
 #[NodeType('manifest_section', 'A manifest section fixture')]
 class ManifestSectionBlockFixture extends Block
