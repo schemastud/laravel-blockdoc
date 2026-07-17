@@ -14,18 +14,24 @@
         "orchestra/testbench": "^10.0",
         "pestphp/pest": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.0",
-        "schemastud/laravel-data-schemas": "^1.0",
+        "schemastud/laravel-data-schemas": "dev-main",
         "laravel/pint": "^1.0"
     },
     "suggest": {
         "schemastud/laravel-data-schemas": "Emit JSON Schema for Block subclasses (BlockJsonSchemaGenerator) for LLM structured output."
     },
-    "repositories": {
-        "laravel-data-schemas": {
-            "type": "vcs",
-            "url": "https://github.com/schemastud/laravel-data-schemas.git"
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../laravel-data-schemas",
+            "options": { "symlink": true }
+        },
+        {
+            "type": "path",
+            "url": "../../rushing/laravel-popcorn",
+            "options": { "symlink": true }
         }
-    },
+    ],
     "autoload": {
         "psr-4": {
             "Schemastud\\Blockdoc\\": "src/"

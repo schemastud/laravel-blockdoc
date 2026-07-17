@@ -5,8 +5,12 @@ namespace Schemastud\Blockdoc\Schema;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Attributes\Skin;
+use Schemastud\Blockdoc\Attributes\Widget;
 use Schemastud\Blockdoc\Blocks\Block;
 use Schemastud\Blockdoc\Contracts\ManifestNodeSource;
+use Schemastud\DataSchemas\Overlay\OverlayStack;
+use Schemastud\DataSchemas\Overlay\SchemaOverlayApplier;
 
 /**
  * Builds the node-manifest document for a profile (splicewire-editor issue 06):
@@ -114,7 +118,7 @@ class ManifestBuilder
             $node['categoryId'] = $category;
         }
 
-        return $node + [
+        $node = $node + [
             'admitsChildCategories' => $this->categorySlugs($block->admitsChildCategories()),
             // Typed Blocks hold structured children or categories, never raw inline
             // text; the explicit content-expression escape hatch is base-set-only.
@@ -122,6 +126,61 @@ class ManifestBuilder
             'contentExpression' => null,
             'attrsSchema' => $this->attrsSchema($reflection),
         ];
+
+        return $this->applyOverrides($node, $reflection);
+    }
+
+    /**
+     * ED-15 — emit `x-skin` (node-level) + `x-widget` (per-attr) **override-only**,
+     * folded via DataOverlay's SchemaOverlayApplier (per DO-07 — one override
+     * mechanism across both PHP packages, not a hand-rolled projector). When no
+     * override is authored the node is returned unchanged, so the default case is
+     * byte-for-byte identical and the client node-type-default resolution stands
+     * alone. The manifest declares only the key; the client registry maps
+     * key → component.
+     *
+     * @param  ReflectionClass<Block>  $reflection
+     */
+    protected function applyOverrides(array $node, ReflectionClass $reflection): array
+    {
+        $actions = [];
+
+        $skin = $reflection->getAttributes(Skin::class);
+
+        if (! empty($skin)) {
+            $actions[] = ['target' => "$['x-skin']", 'override' => $skin[0]->newInstance()->name];
+        }
+
+        $properties = $node['attrsSchema']['properties'] ?? [];
+
+        foreach ($reflection->getProperties() as $property) {
+            $name = $property->getName();
+
+            // Only overlay a property the attrsSchema actually emitted — never
+            // fabricate one (create-absent would otherwise invent it).
+            if (! array_key_exists($name, $properties)) {
+                continue;
+            }
+
+            $widget = $property->getAttributes(Widget::class);
+
+            if (empty($widget)) {
+                continue;
+            }
+
+            $actions[] = [
+                'target' => "$.attrsSchema.properties['".$name."']['x-widget']",
+                'override' => $widget[0]->newInstance()->name,
+            ];
+        }
+
+        if (empty($actions)) {
+            return $node;
+        }
+
+        $overlay = new OverlayStack([['overlay' => '1.0.0', 'actions' => $actions]]);
+
+        return (new SchemaOverlayApplier($node, $overlay))->apply();
     }
 
     /**
