@@ -40,8 +40,6 @@ class BlockClassGenerator
         return <<<PHP
 <?php
 
-declare(strict_types=1);
-
 {$namespaceLine}use Schemastud\Blockdoc\Attributes\NodeAttr;
 use Schemastud\Blockdoc\Attributes\NodeType;
 use Schemastud\Blockdoc\Blocks\Block;
