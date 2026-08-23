@@ -2,6 +2,9 @@
 
 namespace Schemastud\Blockdoc;
 
+use Rushing\Popcorn\Registries\IsRegistry;
+use Rushing\Popcorn\Registries\OnDuplicate;
+use Rushing\Popcorn\Registries\RegistryArity;
 use Schemastud\Blockdoc\Contracts\DocumentTransform;
 
 /**
@@ -9,6 +12,17 @@ use Schemastud\Blockdoc\Contracts\DocumentTransform;
  * registered by the package ServiceProvider; grounding-driven transforms are appended by
  * the consuming app (ADR-0021 registry/config seam).
  */
+#[IsRegistry(
+    root: 'blockdoc.transforms',
+    of: 'document transforms applied to a ProseMirror doc in registration order (structural first, then host/grounding-driven)',
+    arity: RegistryArity::ComposeMany,
+    onDuplicate: OnDuplicate::Admit,
+    note: 'ComposeMany, not RunAll: transform() threads the document through every registered transform '
+        .'in turn, each receiving the previous one\'s output. Order is not merely significant, it IS the '
+        .'semantics — ADR-0021 puts the package\'s structural transforms before the app\'s '
+        .'grounding-driven ones for exactly that reason.',
+    order: 51,
+)]
 class TransformPipeline
 {
     /** @var list<class-string<DocumentTransform>> */
