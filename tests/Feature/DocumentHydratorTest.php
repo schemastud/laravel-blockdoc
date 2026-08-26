@@ -1,5 +1,6 @@
 <?php
 
+use Rushing\Popcorn\Registries\Exceptions\RegistryMiss;
 use Schemastud\Blockdoc\Contracts\Document;
 use Schemastud\Blockdoc\DocumentHydrator;
 use Schemastud\Blockdoc\Nodes\GenericNode;
@@ -112,6 +113,10 @@ it('hydrates a typed Block whose content is prose GenericNodes', function () {
         ->and($section->content()[0]->type())->toBe('paragraph');
 });
 
+// Still throws, and the type CHANGED with the kernel migration: the package-local
+// InvalidArgumentException is now the kernel's RegistryMiss (a RuntimeException). Nothing in the
+// estate caught the old one — the DocumentHydrator guards with has() rather than catching — but the
+// change is real, so it is pinned here rather than left to a consumer to discover.
 it('still throws from Schema::resolve for an unregistered type', function () {
     $this->schema->resolve('unknown');
-})->throws(InvalidArgumentException::class);
+})->throws(RegistryMiss::class);

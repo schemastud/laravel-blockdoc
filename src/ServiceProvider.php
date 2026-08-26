@@ -2,6 +2,7 @@
 
 namespace Schemastud\Blockdoc;
 
+use Rushing\Popcorn\Registries\RegistryIndex;
 use Schemastud\Blockdoc\Console\ExportManifestCommand;
 use Schemastud\Blockdoc\Contracts\ManifestNodeSource;
 use Schemastud\Blockdoc\Contracts\Schema;
@@ -48,5 +49,16 @@ class ServiceProvider extends PackageServiceProvider
         $pipeline->register(DedupeImagesTransform::class);
         $pipeline->register(StripConclusionMediaTransform::class);
 
+    }
+
+    public function packageBooted(): void
+    {
+        // Declaring and indexing are two acts (registry-kernel ticket 21 D1): the #[IsRegistry] on each
+        // class says what root it owns, and this is what puts it IN the index. An owner describes DOWN
+        // from its own boot, after whatever fills it; the index never reaches up.
+        $index = $this->app->make(RegistryIndex::class);
+
+        $index->describe($this->app->make(TransformPipeline::class), by: self::class);
+        $index->describe($this->app->make(Schema::class), by: self::class);
     }
 }

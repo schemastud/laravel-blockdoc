@@ -2,9 +2,14 @@
 
 namespace Schemastud\Blockdoc\Schema;
 
+use Rushing\Popcorn\Registries\Authorizer;
+use Rushing\Popcorn\Registries\BasicRegistry;
+use Rushing\Popcorn\Registries\Gated;
 use Rushing\Popcorn\Registries\IsRegistry;
 use Rushing\Popcorn\Registries\OnDuplicate;
+use Rushing\Popcorn\Registries\Registry;
 use Rushing\Popcorn\Registries\RegistryArity;
+use Rushing\Popcorn\Registries\RegistryKey;
 use Schemastud\Blockdoc\Attributes\NodeType;
 use Schemastud\Blockdoc\Blocks\Block;
 use Schemastud\Blockdoc\Contracts\Schema;
@@ -13,6 +18,7 @@ use Schemastud\Blockdoc\Contracts\Schema;
     root: 'blockdoc.node-types',
     of: 'ProseMirror node types — nodeType slug => Block class, read by the DocumentHydrator',
     arity: RegistryArity::PickOne,
+    entryType: 'class-string<'.Block::class.'>',
     onDuplicate: OnDuplicate::Supersede,
     note: 'Nothing SCANS here, despite registerClass() reading #[NodeType] off the class it is handed: '
         .'the host chooses which Block classes exist and hands each one over from its provider, and the '
@@ -20,14 +26,24 @@ use Schemastud\Blockdoc\Contracts\Schema;
         .'a document containing a type the app never registered is corrupt, not degraded.',
     order: 50,
 )]
-class NodeSchema implements Schema
+class NodeSchema implements Gated, Schema
 {
-    /** @var array<string, class-string<Block>> */
-    private array $map = [];
+    /** @var BasicRegistry<class-string<Block>> */
+    private BasicRegistry $entries;
 
-    public function register(string $type, string $class): void
+    public function __construct()
     {
-        $this->map[$type] = $class;
+        $this->entries = BasicRegistry::for($this);
+    }
+
+    /**
+     * @param  class-string<Block>|null  $entry
+     */
+    public function register(RegistryKey|string $key, mixed $entry = null, ?string $by = null, ?string $ability = null): static
+    {
+        $this->entries->register($key, $entry, $by, $ability);
+
+        return $this;
     }
 
     public function registerClass(string $class): void
@@ -41,14 +57,51 @@ class NodeSchema implements Schema
         $this->register($attrs[0]->newInstance()->name, $class);
     }
 
-    public function has(string $type): bool
+    /**
+     * The registered node-type slugs, as callers spelled them — {@see keys()} with the declared root
+     * stripped back off, because keys go relative in and absolute out (ticket 20 D2).
+     *
+     * @return string[]
+     */
+    public function types(): array
     {
-        return isset($this->map[$type]);
+        return $this->entries->relativeKeys();
     }
 
-    public function resolve(string $type): string
+    public function has(RegistryKey|string $key): bool
     {
-        return $this->map[$type]
-            ?? throw new \InvalidArgumentException("Unknown node type [{$type}].");
+        return $this->entries->has($key);
+    }
+
+    public function resolve(RegistryKey|string $key): mixed
+    {
+        return $this->entries->resolve($key);
+    }
+
+    public function tryResolve(RegistryKey|string $key): mixed
+    {
+        return $this->entries->tryResolve($key);
+    }
+
+    public function matches(RegistryKey|string $key): array
+    {
+        return $this->entries->matches($key);
+    }
+
+    public function keys(): array
+    {
+        return $this->entries->keys();
+    }
+
+    public function unfiltered(): Registry
+    {
+        return $this->entries->unfiltered();
+    }
+
+    public function authorizeWith(?Authorizer $authorizer): static
+    {
+        $this->entries->authorizeWith($authorizer);
+
+        return $this;
     }
 }
