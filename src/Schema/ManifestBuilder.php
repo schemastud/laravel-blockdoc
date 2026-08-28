@@ -194,7 +194,16 @@ class ManifestBuilder
             return null;
         }
 
-        return str_replace('-', '_', (string) Str::afterLast(rtrim($category, '/'), '/'));
+        // Take the last segment under EITHER separator. Category ids were absolute URIs
+        // (`…/json-schemas/block-category/content-section`) until registry-kernel 58 D4 retired that
+        // form for composition kinds in favour of dotted keys (`block-category.content-section`).
+        // Splitting on `/` alone silently returned the WHOLE dotted key, so the slug became
+        // `block_category.content_section` and every typed block failed validation with a 422 —
+        // one test, in a package D4 never named, because the slug derivation lives here and not
+        // beside the constants it consumes.
+        $tail = (string) Str::afterLast(rtrim($category, '/.'), '/');
+
+        return str_replace('-', '_', (string) Str::afterLast($tail, '.'));
     }
 
     /**
