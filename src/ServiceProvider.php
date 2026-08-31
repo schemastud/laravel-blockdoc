@@ -25,7 +25,21 @@ class ServiceProvider extends PackageServiceProvider
     public function registeringPackage(): void
     {
         // An empty node-type registry. The app registers its concrete Block types.
-        $this->app->singleton(Schema::class, NodeSchema::class);
+        //
+        // ⚠️ Bound on the CONCRETE and forwarded from the interface, rather than the other way round.
+        // `#[IsRegistry]` lives on `NodeSchema` — the class owning the keyspace — while consumers
+        // type-hint `Schema`. With `singleton(Schema::class, NodeSchema::class)` alone the singleton
+        // lives under `Schema::class` and `make(NodeSchema::class)` builds a FRESH one, so the declared
+        // name and the bound name were two different objects. Registry-kernel 73's baked membership
+        // resolves a registry by its DECLARED class, which turned that from cosmetic into a fresh, empty
+        // `blockdoc.node-types` in the index.
+        //
+        // ⚠️ And NOT `alias(Schema::class, NodeSchema::class)`, which is the obvious one-liner and
+        // **hangs the process**: the singleton's concrete IS `NodeSchema::class`, so resolving it walks
+        // the alias back to `Schema::class` and recurses until the stack dies — exit 255, no output, no
+        // catchable error. Measured 2026-08-31 at `~/Herd/splicewire-app`.
+        $this->app->singleton(NodeSchema::class);
+        $this->app->singleton(Schema::class, fn ($app) => $app->make(NodeSchema::class));
 
         $this->app->bind(
             DocumentHydrator::class,
@@ -59,6 +73,6 @@ class ServiceProvider extends PackageServiceProvider
         $index = $this->app->make(RegistryIndex::class);
 
         $index->describe($this->app->make(TransformPipeline::class), by: self::class);
-        $index->describe($this->app->make(Schema::class), by: self::class);
+        $index->describe($this->app->make(NodeSchema::class), by: self::class);
     }
 }
