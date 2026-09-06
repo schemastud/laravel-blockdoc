@@ -8,7 +8,6 @@ use Rushing\Popcorn\Registries\Gated;
 use Rushing\Popcorn\Registries\IsRegistry;
 use Rushing\Popcorn\Registries\OnDuplicate;
 use Rushing\Popcorn\Registries\Registry;
-use Rushing\Popcorn\Registries\RegistryArity;
 use Rushing\Popcorn\Registries\RegistryKey;
 use Schemastud\Blockdoc\Attributes\NodeType;
 use Schemastud\Blockdoc\Blocks\Block;
@@ -16,14 +15,9 @@ use Schemastud\Blockdoc\Contracts\Schema;
 
 #[IsRegistry(
     root: 'blockdoc.node-types',
-    of: 'ProseMirror node types — nodeType slug => Block class, read by the DocumentHydrator',
-    arity: RegistryArity::PickOne,
     entryType: 'class-string<'.Block::class.'>',
     onDuplicate: OnDuplicate::Supersede,
-    note: 'Nothing SCANS here, despite registerClass() reading #[NodeType] off the class it is handed: '
-        .'the host chooses which Block classes exist and hands each one over from its provider, and the '
-        .'attribute only supplies the slug. A miss THROWS rather than falling back to a generic node — '
-        .'a document containing a type the app never registered is corrupt, not degraded.',
+    description: 'ProseMirror node types — nodeType slug => Block class, read by the DocumentHydrator. Nothing SCANS here, despite registerClass() reading #[NodeType] off the class it is handed: the host chooses which Block classes exist and hands each one over from its provider, and the attribute only supplies the slug. A miss THROWS rather than falling back to a generic node — a document containing a type the app never registered is corrupt, not degraded.',
     order: 50,
 )]
 class NodeSchema implements Gated, Schema

@@ -9,7 +9,6 @@ use Rushing\Popcorn\Registries\IsRegistry;
 use Rushing\Popcorn\Registries\Key;
 use Rushing\Popcorn\Registries\OnDuplicate;
 use Rushing\Popcorn\Registries\Registry;
-use Rushing\Popcorn\Registries\RegistryArity;
 use Rushing\Popcorn\Registries\RegistryKey;
 use Schemastud\Blockdoc\Contracts\DocumentTransform;
 
@@ -31,14 +30,9 @@ use Schemastud\Blockdoc\Contracts\DocumentTransform;
  */
 #[IsRegistry(
     root: 'blockdoc.transforms',
-    of: 'document transforms applied to a ProseMirror doc in registration order (structural first, then host/grounding-driven)',
-    arity: RegistryArity::ComposeMany,
     entryType: 'class-string<'.DocumentTransform::class.'>',
     onDuplicate: OnDuplicate::Admit,
-    note: 'ComposeMany, not RunAll: transform() threads the document through every registered transform '
-        .'in turn, each receiving the previous one\'s output. Order is not merely significant, it IS the '
-        .'semantics — ADR-0021 puts the package\'s structural transforms before the app\'s '
-        .'grounding-driven ones for exactly that reason.',
+    description: 'Document transforms applied in registration order. transform() passes each result to the next transform. Structural transforms precede host and grounding transforms, as specified in ADR-0021.',
     order: 51,
 )]
 class TransformPipeline implements Gated, Registry
