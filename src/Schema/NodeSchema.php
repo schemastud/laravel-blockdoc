@@ -6,7 +6,7 @@ use Rushing\Popcorn\Registries\Authorizer;
 use Rushing\Popcorn\Registries\BasicRegistry;
 use Rushing\Popcorn\Registries\Gated;
 use Rushing\Popcorn\Registries\IsRegistry;
-use Rushing\Popcorn\Registries\OnDuplicate;
+use Rushing\Popcorn\Registries\OnKeyDuplicate;
 use Rushing\Popcorn\Registries\Registry;
 use Rushing\Popcorn\Registries\RegistryKey;
 use Schemastud\Blockdoc\Attributes\NodeType;
@@ -16,7 +16,7 @@ use Schemastud\Blockdoc\Contracts\Schema;
 #[IsRegistry(
     root: 'blockdoc.node-types',
     entryType: 'class-string<'.Block::class.'>',
-    onDuplicate: OnDuplicate::Supersede,
+    onKeyDuplicate: OnKeyDuplicate::Supersede,
     description: 'ProseMirror node types — nodeType slug => Block class, read by the DocumentHydrator. Nothing SCANS here, despite registerClass() reading #[NodeType] off the class it is handed: the host chooses which Block classes exist and hands each one over from its provider, and the attribute only supplies the slug. A miss THROWS rather than falling back to a generic node — a document containing a type the app never registered is corrupt, not degraded.',
     order: 50,
 )]

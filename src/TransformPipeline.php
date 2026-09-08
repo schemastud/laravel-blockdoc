@@ -7,7 +7,7 @@ use Rushing\Popcorn\Registries\BasicRegistry;
 use Rushing\Popcorn\Registries\Gated;
 use Rushing\Popcorn\Registries\IsRegistry;
 use Rushing\Popcorn\Registries\Key;
-use Rushing\Popcorn\Registries\OnDuplicate;
+use Rushing\Popcorn\Registries\OnKeyDuplicate;
 use Rushing\Popcorn\Registries\Registry;
 use Rushing\Popcorn\Registries\RegistryKey;
 use Schemastud\Blockdoc\Contracts\DocumentTransform;
@@ -23,7 +23,7 @@ use Schemastud\Blockdoc\Contracts\DocumentTransform;
  * trusted implicitly. It is now {@see Registry::matches()}' documented registration-order guarantee
  * (registry-kernel ticket 08 D4) — the same property, said out loud by the contract that provides it.
  *
- * `onDuplicate` stays {@see OnDuplicate::Admit} and that is load-bearing here, not incidental: under
+ * `onKeyDuplicate` stays {@see OnKeyDuplicate::Admit} and that is load-bearing here, not incidental: under
  * `Supersede` a second registration of the same transform would MOVE the entry to the end of the chain,
  * where appending to an array kept both in place. For a pipeline that is a visible defect. Admit keeps
  * two live entries under one key, exactly as the old array kept two elements.
@@ -31,7 +31,7 @@ use Schemastud\Blockdoc\Contracts\DocumentTransform;
 #[IsRegistry(
     root: 'blockdoc.transforms',
     entryType: 'class-string<'.DocumentTransform::class.'>',
-    onDuplicate: OnDuplicate::Admit,
+    onKeyDuplicate: OnKeyDuplicate::Admit,
     description: 'Document transforms applied in registration order. transform() passes each result to the next transform. Structural transforms precede host and grounding transforms, as specified in ADR-0021.',
     order: 51,
 )]
