@@ -8,6 +8,7 @@ use Schemastud\Blockdoc\Attributes\NodeType;
 use Schemastud\Blockdoc\Attributes\Skin;
 use Schemastud\Blockdoc\Attributes\Widget;
 use Schemastud\Blockdoc\Blocks\Block;
+use Schemastud\Blockdoc\Contracts\DeclaresCodeAdmission;
 use Schemastud\Blockdoc\Contracts\ManifestNodeSource;
 use Schemastud\DataSchemas\Overlay\OverlayStack;
 use Schemastud\DataSchemas\Overlay\SchemaOverlayApplier;
@@ -51,6 +52,12 @@ class ManifestBuilder
         return [
             'profile' => $profile,
             'version' => self::VERSION,
+            // ADR-0227 / ux-0227 d1 — whether this profile admits code (expression props, opaque nodes,
+            // MDX expressions). A source opts out through DeclaresCodeAdmission; one that does not admits
+            // code (true), so existing sources are unchanged. The save check reads this key.
+            'x-admits-code' => $this->source instanceof DeclaresCodeAdmission
+                ? $this->source->admitsCodeFor($profile)
+                : true,
             'doc' => [
                 'admitsChildCategories' => $this->categorySlugs($this->source->docAdmitsFor($profile)),
             ],
