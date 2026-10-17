@@ -21,21 +21,6 @@
             }
         },
         {
-            "name": "h1",
-            "description": "A level-1 heading.",
-            "group": "block",
-            "category": "prose",
-            "admitsChildCategories": null,
-            "admitsText": true,
-            "contentExpression": null,
-            "attrsSchema": {
-                "type": "object",
-                "properties": {
-                    "id": { "type": ["string", "null"] }
-                }
-            }
-        },
-        {
             "name": "h2",
             "description": "A level-2 heading.",
             "group": "block",

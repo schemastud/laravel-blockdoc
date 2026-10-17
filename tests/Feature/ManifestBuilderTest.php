@@ -177,7 +177,7 @@ it('ships a canonical base manifest with the base prose vocabulary and marks', f
         // ADR-0228 d6 — a node's name is its JSX tag; the heading level is the tag
         // (h1..h6), not a `level` attr on a single `heading` node.
         ->and(array_column($base['nodes'], 'name'))->toBe([
-            'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'ul', 'ol',
+            'p', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'ul', 'ol',
             'li', 'pre', 'hr', 'br',
         ])
         ->and(array_column($base['marks'], 'name'))->toBe(['strong', 'em', 'code', 'link', 'annotation']);
