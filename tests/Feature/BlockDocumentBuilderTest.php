@@ -85,7 +85,7 @@ it('resolves section heading and prose content via registry', function () {
     expect($section->type())->toBe('section')
         ->and($section->attrs()['heading'])->toBe('Locations')
         ->and($section->content())->toHaveCount(1)
-        ->and($section->content()[0]->type())->toBe('paragraph');
+        ->and($section->content()[0]->type())->toBe('p');
 });
 
 it('resolves faq_item children via registry', function () {

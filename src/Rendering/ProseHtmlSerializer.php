@@ -5,9 +5,10 @@ namespace Schemastud\Blockdoc\Rendering;
 use Schemastud\Blockdoc\Contracts\Node;
 
 /**
- * Serializes standard ProseMirror prose nodes (paragraph, text + marks, headings,
- * lists, blockquote, hard_break) to HTML. Embed Nodes are handled by the renderer,
- * not here — this only walks prose subtrees. The inverse of {@see ProseHtmlParser}.
+ * Serializes standard prose nodes (p, text + marks, h1..h6, lists, blockquote, br)
+ * to HTML. Embed Nodes are handled by the renderer, not here — this only walks prose
+ * subtrees. The inverse of {@see ProseHtmlParser}. ADR-0228 d6: a node's name is its
+ * JSX tag, so each prose node serializes to the element of the same name.
  */
 class ProseHtmlSerializer
 {
@@ -23,13 +24,8 @@ class ProseHtmlSerializer
     {
         return match ($node->type()) {
             'text' => $this->text($node),
-            'paragraph' => $this->wrap('p', $node),
-            'heading' => $this->heading($node),
-            'bullet_list' => $this->wrap('ul', $node),
-            'ordered_list' => $this->wrap('ol', $node),
-            'list_item' => $this->wrap('li', $node),
-            'blockquote' => $this->wrap('blockquote', $node),
-            'hard_break' => '<br>',
+            'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote' => $this->wrap($node->type(), $node),
+            'br' => '<br>',
             default => $this->fragment($node->content()),
         };
     }
@@ -37,14 +33,6 @@ class ProseHtmlSerializer
     private function wrap(string $tag, Node $node, string $attributes = ''): string
     {
         return "<{$tag}{$attributes}>".$this->fragment($node->content())."</{$tag}>";
-    }
-
-    private function heading(Node $node): string
-    {
-        $level = (int) ($node->attrs()['level'] ?? 3);
-        $level = max(2, min(6, $level));
-
-        return $this->wrap("h{$level}", $node);
     }
 
     private function text(Node $node): string

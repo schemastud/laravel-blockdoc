@@ -70,9 +70,9 @@ class ProseHtmlParser
         foreach ($nodes as $node) {
             $prev = $result === [] ? null : $result[count($result) - 1];
 
-            if ($node->type() === 'paragraph'
+            if ($node->type() === 'p'
                 && $prev instanceof Node
-                && $prev->type() === 'paragraph'
+                && $prev->type() === 'p'
                 && ! $this->endsSentence($this->plainText($prev))
             ) {
                 $children = $prev->content();
@@ -82,7 +82,7 @@ class ProseHtmlParser
                     $children[] = new GenericNode('text', [], [], ' ');
                 }
 
-                $result[count($result) - 1] = new GenericNode('paragraph', [], [...$children, ...$node->content()]);
+                $result[count($result) - 1] = new GenericNode('p', [], [...$children, ...$node->content()]);
 
                 continue;
             }
@@ -119,7 +119,7 @@ class ProseHtmlParser
         if ($node instanceof DOMText) {
             $text = trim($node->wholeText);
 
-            return $text === '' ? null : new GenericNode('paragraph', [], [new GenericNode('text', [], [], $text)]);
+            return $text === '' ? null : new GenericNode('p', [], [new GenericNode('text', [], [], $text)]);
         }
 
         if (! $node instanceof DOMElement) {
@@ -127,16 +127,18 @@ class ProseHtmlParser
         }
 
         return match (strtolower($node->tagName)) {
-            'p' => new GenericNode('paragraph', [], $this->inline($node)),
+            'p' => new GenericNode('p', [], $this->inline($node)),
+            // ADR-0228 d6 — a node's name is its JSX tag: each heading level is its own
+            // h1..h6 node (the level is the tag), not a single `heading` with a level attr.
             'h2', 'h3', 'h4', 'h5', 'h6' => new GenericNode(
-                'heading',
-                ['level' => (int) substr(strtolower($node->tagName), 1)],
+                strtolower($node->tagName),
+                [],
                 $this->inline($node),
             ),
-            'ul' => new GenericNode('bullet_list', [], $this->listItems($node)),
-            'ol' => new GenericNode('ordered_list', [], $this->listItems($node)),
+            'ul' => new GenericNode('ul', [], $this->listItems($node)),
+            'ol' => new GenericNode('ol', [], $this->listItems($node)),
             'blockquote' => new GenericNode('blockquote', [], $this->inline($node)),
-            default => new GenericNode('paragraph', [], $this->inline($node)),
+            default => new GenericNode('p', [], $this->inline($node)),
         };
     }
 
@@ -149,7 +151,7 @@ class ProseHtmlParser
 
         foreach ($list->childNodes as $child) {
             if ($child instanceof DOMElement && strtolower($child->tagName) === 'li') {
-                $items[] = new GenericNode('list_item', [], $this->inline($child));
+                $items[] = new GenericNode('li', [], $this->inline($child));
             }
         }
 
@@ -180,7 +182,7 @@ class ProseHtmlParser
             $tag = strtolower($child->tagName);
 
             if ($tag === 'br') {
-                $out[] = new GenericNode('hard_break');
+                $out[] = new GenericNode('br');
 
                 continue;
             }

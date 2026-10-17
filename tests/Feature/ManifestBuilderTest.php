@@ -174,9 +174,11 @@ it('ships a canonical base manifest with the base prose vocabulary and marks', f
 
     expect($base['profile'])->toBe('base')
         ->and($base['version'])->toBe(1)
+        // ADR-0228 d6 — a node's name is its JSX tag; the heading level is the tag
+        // (h1..h6), not a `level` attr on a single `heading` node.
         ->and(array_column($base['nodes'], 'name'))->toBe([
-            'paragraph', 'heading', 'blockquote', 'bullet_list', 'ordered_list',
-            'list_item', 'code_block', 'horizontal_rule', 'hard_break',
+            'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'ul', 'ol',
+            'li', 'pre', 'hr', 'br',
         ])
         ->and(array_column($base['marks'], 'name'))->toBe(['strong', 'em', 'code', 'link', 'annotation']);
 
@@ -187,15 +189,17 @@ it('ships a canonical base manifest with the base prose vocabulary and marks', f
 
     // The frozen-format spot checks: textblocks, containment, escape hatches.
     $byName = array_column($base['nodes'], null, 'name');
-    expect($byName['paragraph']['admitsText'])->toBeTrue()
-        ->and($byName['heading']['attrsSchema']['properties']['level']['type'])->toBe('integer')
+    expect($byName['p']['admitsText'])->toBeTrue()
+        ->and($byName['h2']['admitsText'])->toBeTrue()
+        // No `level` attr survives the rename — the level is encoded in the tag.
+        ->and($byName['h2']['attrsSchema']['properties'])->toBe(['id' => ['type' => ['string', 'null']]])
         ->and($byName['blockquote']['admitsChildCategories'])->toBe(['prose'])
-        ->and($byName['bullet_list']['admitsChildCategories'])->toBe(['list_item'])
-        ->and($byName['list_item']['category'])->toBe('list_item')
-        ->and($byName['code_block']['contentExpression'])->toBe('text*')
-        ->and($byName['horizontal_rule']['admitsChildCategories'])->toBe([])
-        ->and($byName['hard_break']['group'])->toBe('inline')
-        ->and($byName['hard_break']['category'])->toBeNull();
+        ->and($byName['ul']['admitsChildCategories'])->toBe(['list_item'])
+        ->and($byName['li']['category'])->toBe('list_item')
+        ->and($byName['pre']['contentExpression'])->toBe('text*')
+        ->and($byName['hr']['admitsChildCategories'])->toBe([])
+        ->and($byName['br']['group'])->toBe('inline')
+        ->and($byName['br']['category'])->toBeNull();
 
     // The annotation mark allows overlapping same-type marks; link carries href.
     $marks = array_column($base['marks'], null, 'name');

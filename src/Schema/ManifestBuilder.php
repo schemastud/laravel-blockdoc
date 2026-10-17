@@ -26,8 +26,9 @@ use Schemastud\DataSchemas\Overlay\SchemaOverlayApplier;
  * `-` → `_`) in `category`/`admitsChildCategories`, preserving the raw `$id` as
  * an additive `categoryId` when it differs.
  *
- * The base prose vocabulary (paragraph/heading/lists + strong/em/code/link marks)
- * is NOT emitted per profile; it is the canonical hand-authored manifest at
+ * The base prose vocabulary (p/h1..h6/lists + strong/em/code/link marks; each
+ * node's name is its JSX tag, ADR-0228 d6) is NOT emitted per profile; it is the
+ * canonical hand-authored manifest at
  * {@see self::baseManifestPath()}, vendored client-side.
  */
 class ManifestBuilder
