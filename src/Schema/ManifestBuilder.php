@@ -135,6 +135,28 @@ class ManifestBuilder
             'attrsSchema' => $this->attrsSchema($reflection),
         ];
 
+        $slots = [];
+        $names = [];
+        foreach ($block->slots() as $slot) {
+            $name = $slot['name'] ?? null;
+            if (! is_string($name) || preg_match('/\A[A-Za-z_$][A-Za-z0-9_$]*\z/', $name) !== 1
+                || in_array($name, ['children', '__proto__', 'prototype', 'constructor'], true)
+                || isset($names[$name]) || isset($node['attrsSchema']['properties'][$name])) {
+                throw new \LogicException($class.' declares an invalid, duplicate or prop-conflicting slot name.');
+            }
+            if (! array_key_exists('admitsChildCategories', $slot)
+                || ($slot['admitsChildCategories'] !== null && (! is_array($slot['admitsChildCategories'])
+                    || ! array_is_list($slot['admitsChildCategories'])
+                    || array_filter($slot['admitsChildCategories'], fn ($category) => ! is_string($category) || $category === '') !== []))) {
+                throw new \LogicException($class.' slot '.$name.' must declare child categories (a list or null).');
+            }
+            $names[$name] = true;
+            $slots[] = ['name' => $name, 'admitsChildCategories' => $this->categorySlugs($slot['admitsChildCategories'])];
+        }
+        if ($slots !== []) {
+            $node['slots'] = $slots;
+        }
+
         return $this->applyOverrides($node, $reflection);
     }
 

@@ -76,6 +76,17 @@ abstract class Block extends Data implements Node
     }
 
     /**
+     * Named component slots (ux-0231 d9). The default slot remains children,
+     * governed by admitsChildCategories(); named slots have their own admission.
+     *
+     * @return list<array{name: string, admitsChildCategories: list<string>|null}>
+     */
+    public function slots(): array
+    {
+        return [];
+    }
+
+    /**
      * @param  list<Node>  $children
      *
      * @throws BlockContainmentException when a child's category is not admitted
