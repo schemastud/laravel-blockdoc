@@ -94,8 +94,9 @@ class NodeSchema implements Gated, Schema
     }
 
     /**
-     * The registered node-type slugs, as callers spelled them — {@see keys()} with the declared root
-     * stripped back off, because keys go relative in and absolute out (ticket 20 D2).
+     * The registered node types as callers spelled them: legal slugs as-is and JSX tags as tags ({@see typeFor()}) —
+     * {@see keys()} with the declared root stripped back off, because keys go relative in and absolute out (ticket 20 D2).
+     * This is the node-type vocabulary; {@see keys()} and {@see unfiltered()} are the registry keyspace.
      *
      * @return string[]
      */
@@ -124,11 +125,21 @@ class NodeSchema implements Gated, Schema
         return $this->entries->matches(self::key($key));
     }
 
+    /**
+     * The registry keyspace (absolute popcorn keys), not the node-type vocabulary: a JSX-tag type appears in its encoded
+     * form, `blockdoc.node-types.tag:content:outline`. Read node types through {@see types()}.
+     */
     public function keys(): array
     {
         return $this->entries->keys();
     }
 
+    /**
+     * The backing registry without the authorizer (the {@see Registry} contract's escape hatch, read by popcorn's own
+     * key/registry tooling). It is a popcorn Registry, so it can only hold legal keys: a JSX-tag type sits in it in its
+     * encoded form, exactly as in {@see keys()}, and {@see typeFor()} decodes any of its relative keys back to the tag.
+     * No decoding wrapper is possible here without leaving popcorn's one keyspace.
+     */
     public function unfiltered(): Registry
     {
         return $this->entries->unfiltered();

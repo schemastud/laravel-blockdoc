@@ -39,3 +39,21 @@ it('encodes a tag reversibly and leaves a legal key alone', function (string $ty
 it('refuses a raw node type that spells the reserved tag prefix', function () {
     NodeSchema::keyFor('tag:content');
 })->throws(InvalidArgumentException::class);
+
+// Review (orch-peer 10:18Z): the registry-keyspace views (keys(), unfiltered()) carry the encoded key by necessity, since a
+// popcorn Registry holds only legal keys; nothing is lost, because every one of them decodes back to the registered tag.
+it('exposes the registry keyspace in encoded form, and every key decodes back to its tag', function () {
+    $schema = new NodeSchema;
+    $schema->registerClass(TagKeyOutlineFixture::class);
+    $schema->registerClass(TagKeySnakeFixture::class);
+
+    $relative = array_map(
+        static fn (string $key): string => substr($key, strlen('blockdoc.node-types.')),
+        $schema->unfiltered()->keys(),
+    );
+
+    expect($relative)->toEqualCanonicalizing(['tag:content:outline', 'faq_item'])
+        ->and(array_map(NodeSchema::typeFor(...), $relative))->toEqualCanonicalizing(['ContentOutline', 'faq_item'])
+        ->and($schema->keys())->toEqualCanonicalizing($schema->unfiltered()->keys())
+        ->and($schema->types())->toEqualCanonicalizing(['ContentOutline', 'faq_item']);
+});
