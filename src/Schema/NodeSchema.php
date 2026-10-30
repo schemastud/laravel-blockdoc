@@ -22,8 +22,50 @@ use Schemastud\Blockdoc\Contracts\Schema;
 )]
 class NodeSchema implements Gated, Schema
 {
+    /**
+     * The reserved prefix of a node type spelled as a JSX tag. popcorn keys are lowercase dot-separated segments and are
+     * never folded (Key: "it validates; it never repairs"), but the composition-slot rename made node types PascalCase
+     * tags (`ContentOutline`). Such a tag is keyed by one reversible segment, `tag:` plus its lower-cased words joined
+     * by `:` (`tag:content:outline`), and every public method here still speaks the tag.
+     */
+    public const TAG_PREFIX = 'tag:';
+
     /** @var BasicRegistry<class-string<Block>> */
     private BasicRegistry $entries;
+
+    /**
+     * The registry key for a node type: a legal key as-is, a PascalCase tag by its reversible encoding.
+     * `ContentOutline` → `tag:content:outline`, `HTMLBlock` → `tag:h:t:m:l:block`, `faq_item` → `faq_item`.
+     */
+    public static function keyFor(string $type): string
+    {
+        if (str_starts_with($type, self::TAG_PREFIX)) {
+            throw new \InvalidArgumentException("Node type [{$type}] spells the reserved prefix [".self::TAG_PREFIX.'] that NodeSchema keys JSX tags by.');
+        }
+
+        if (preg_match('/^(?:[A-Z][a-z0-9]*)+$/', $type) !== 1) {
+            return $type;
+        }
+
+        preg_match_all('/[A-Z][a-z0-9]*/', $type, $words);
+
+        return self::TAG_PREFIX.implode(':', array_map('strtolower', $words[0]));
+    }
+
+    /** The node type a registry key names: the inverse of {@see keyFor()}. */
+    public static function typeFor(string $key): string
+    {
+        if (! str_starts_with($key, self::TAG_PREFIX)) {
+            return $key;
+        }
+
+        return implode('', array_map('ucfirst', explode(':', substr($key, strlen(self::TAG_PREFIX)))));
+    }
+
+    private static function key(RegistryKey|string $key): RegistryKey|string
+    {
+        return is_string($key) ? self::keyFor($key) : $key;
+    }
 
     public function __construct()
     {
@@ -35,7 +77,7 @@ class NodeSchema implements Gated, Schema
      */
     public function register(RegistryKey|string $key, mixed $entry = null, ?string $by = null, ?string $ability = null): static
     {
-        $this->entries->register($key, $entry, $by, $ability);
+        $this->entries->register(self::key($key), $entry, $by, $ability);
 
         return $this;
     }
@@ -52,41 +94,52 @@ class NodeSchema implements Gated, Schema
     }
 
     /**
-     * The registered node-type slugs, as callers spelled them — {@see keys()} with the declared root
-     * stripped back off, because keys go relative in and absolute out (ticket 20 D2).
+     * The registered node types as callers spelled them: legal slugs as-is and JSX tags as tags ({@see typeFor()}) —
+     * {@see keys()} with the declared root stripped back off, because keys go relative in and absolute out (ticket 20 D2).
+     * This is the node-type vocabulary; {@see keys()} and {@see unfiltered()} are the registry keyspace.
      *
      * @return string[]
      */
     public function types(): array
     {
-        return $this->entries->relativeKeys();
+        return array_map(self::typeFor(...), $this->entries->relativeKeys());
     }
 
     public function has(RegistryKey|string $key): bool
     {
-        return $this->entries->has($key);
+        return $this->entries->has(self::key($key));
     }
 
     public function resolve(RegistryKey|string $key): mixed
     {
-        return $this->entries->resolve($key);
+        return $this->entries->resolve(self::key($key));
     }
 
     public function tryResolve(RegistryKey|string $key): mixed
     {
-        return $this->entries->tryResolve($key);
+        return $this->entries->tryResolve(self::key($key));
     }
 
     public function matches(RegistryKey|string $key): array
     {
-        return $this->entries->matches($key);
+        return $this->entries->matches(self::key($key));
     }
 
+    /**
+     * The registry keyspace (absolute popcorn keys), not the node-type vocabulary: a JSX-tag type appears in its encoded
+     * form, `blockdoc.node-types.tag:content:outline`. Read node types through {@see types()}.
+     */
     public function keys(): array
     {
         return $this->entries->keys();
     }
 
+    /**
+     * The backing registry without the authorizer (the {@see Registry} contract's escape hatch, read by popcorn's own
+     * key/registry tooling). It is a popcorn Registry, so it can only hold legal keys: a JSX-tag type sits in it in its
+     * encoded form, exactly as in {@see keys()}, and {@see typeFor()} decodes any of its relative keys back to the tag.
+     * No decoding wrapper is possible here without leaving popcorn's one keyspace.
+     */
     public function unfiltered(): Registry
     {
         return $this->entries->unfiltered();
