@@ -128,9 +128,9 @@ class ManifestBuilder
 
         $node = $node + [
             'admitsChildCategories' => $this->categorySlugs($block->admitsChildCategories()),
-            // Typed Blocks hold structured children or categories, never raw inline
-            // text; the explicit content-expression escape hatch is base-set-only.
-            'admitsText' => false,
+            // Typed Blocks default to structured children only; a Code Component
+            // may explicitly admit direct text through Block::admitsText().
+            'admitsText' => $block->admitsText(),
             'contentExpression' => null,
             'attrsSchema' => $this->attrsSchema($reflection),
         ];

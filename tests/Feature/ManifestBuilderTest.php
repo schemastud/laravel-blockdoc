@@ -142,6 +142,30 @@ it('emits admitsText false and contentExpression null for typed Blocks', functio
     }
 });
 
+#[NodeType('manifest_text_component', 'A text-admitting component fixture')]
+class ManifestTextComponentBlockFixture extends Block
+{
+    public function admitsText(): bool
+    {
+        return true;
+    }
+}
+
+it('reflects a Block text-admission opt-in in its manifest', function () {
+    $source = new class extends ManifestSourceFixture
+    {
+        public function nodeClassesFor(string $profile): array
+        {
+            return [ManifestTextComponentBlockFixture::class];
+        }
+    };
+
+    $node = (new ManifestBuilder($source))->build('fixture')['nodes'][0];
+
+    expect($node['name'])->toBe('manifest_text_component')
+        ->and($node['admitsText'])->toBeTrue();
+});
+
 it('projects the attrs schema with id injected as a nullable string first', function () {
     $node = $this->builder->build('fixture')['nodes'][1];
 

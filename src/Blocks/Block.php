@@ -76,6 +76,17 @@ abstract class Block extends Data implements Node
     }
 
     /**
+     * Whether this node admits direct text children in addition to structured child nodes.
+     *
+     * Typed Blocks default to structured content only. A Code Component that intentionally renders
+     * literal text may opt in by overriding this method.
+     */
+    public function admitsText(): bool
+    {
+        return false;
+    }
+
+    /**
      * Named component slots (ux-0231 d9). The default slot remains children,
      * governed by admitsChildCategories(); named slots have their own admission.
      *
