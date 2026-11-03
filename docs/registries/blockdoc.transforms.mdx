@@ -1,0 +1,88 @@
+---
+title: Document transforms
+segment: blockdoc.transforms
+nav_order: 51
+excerpt: The ordered chain of transforms that tidies document input before it is built into blocks.
+---
+
+# Document transforms
+
+`blockdoc.transforms` is an ordered chain of **document transforms**. Each one takes the input
+`BlockDocumentBuilder` builds from (the opening, sections, FAQ and conclusion, each a list of prose
+and embeds) and returns a corrected version. Calling `transform()` on the pipeline runs every
+registered transform in turn, handing each the previous one's output. That is where rules such as
+"one lead image per section" or "no duplicate images" live, so the builder itself only places and
+types content.
+
+{/* registry-facts:start — generated from the #[IsRegistry] declaration by `splicewire:beam:docs:registries:scaffold`. Rerun the command; do not edit between these markers. */}
+
+- **Root:** `blockdoc.transforms`
+- **Entries:** `class-string<Schemastud\Blockdoc\Contracts\DocumentTransform>`
+- **Duplicate keys:** Admit — every registration is kept; a single-entry read of a shared key refuses as ambiguous
+- **Population:** Optional — an empty registry is normal
+- **Order:** `51` (display order, ascending)
+- **Declared by:** `Schemastud\Blockdoc\TransformPipeline`
+
+{/* registry-facts:end */}
+
+## What ships
+
+The package registers three structural transforms, in this order:
+
+- `OneLeadVisualTransform` drops floated images (`image_float` embeds) from any section that
+  contains an `expedia_teaser` embed, so the teaser is the section's one lead visual.
+- `DedupeImagesTransform` drops a floated image whose source has already appeared earlier.
+- `StripConclusionMediaTransform` drops floated images from the conclusion.
+
+## Adding a transform
+
+Implement `DocumentTransform` and register the class from your provider's `boot()`. Yours runs after
+the package's, because providers register in boot order:
+
+```php
+use Schemastud\Blockdoc\Contracts\DocumentTransform;
+use Schemastud\Blockdoc\TransformPipeline;
+
+final class DropEmptySectionsTransform implements DocumentTransform
+{
+    public function transform(array $input, array $context = []): array
+    {
+        $input['sections'] = array_values(array_filter(
+            $input['sections'] ?? [],
+            fn (array $section) => ($section['content'] ?? []) !== [],
+        ));
+
+        return $input;
+    }
+}
+
+public function boot(): void
+{
+    $this->app->make(TransformPipeline::class)->register(DropEmptySectionsTransform::class);
+}
+```
+
+The one-argument form keys the transform by its class name (`drop-empty-sections-transform`); pass
+a key first if you want to name it yourself. Transforms are resolved from the container when the
+chain runs, so they can take constructor dependencies. `$context` carries whatever runtime data the
+caller passes to `transform()`, such as the facts a transform needs to check embeds against.
+
+## Order is the point
+
+Registration order is the order the chain runs. The duplicate policy is **admit**, so the chain
+behaves like the list it is: registering the same transform twice keeps both entries in their
+places, and the transform runs twice. There is no override-by-key here. To change the chain, change
+what your providers register.
+
+Read the chain with `transforms()`, which lists the class names in order, duplicates included.
+
+## Related registries
+
+- [`blockdoc.node-types`](blockdoc.node-types) — the block classes the built document is made of.
+- [The blockdoc cluster](blockdoc) — how the two fit together.
+
+## Going deeper
+
+[Popcorn registries](/beam/docs/foundations/registries) explains duplicate policies in general. The
+registry's source is
+[`TransformPipeline`](https://github.com/schemastud/laravel-blockdoc/blob/main/src/TransformPipeline.php).

@@ -1,0 +1,39 @@
+---
+title: The blockdoc cluster
+segment: blockdoc
+nav_order: 50
+excerpt: The two registries behind blockdoc documents: the node types they are made of, and the transforms that shape their input.
+---
+
+# The blockdoc cluster
+
+[`schemastud/laravel-blockdoc`](https://github.com/schemastud/laravel-blockdoc) models rich
+documents as faithful ProseMirror JSON, with typed PHP classes for the blocks your application
+defines. It declares two registries, and an application that uses blockdoc fills both from its own
+providers:
+
+- **Say which node types become typed blocks**: [`blockdoc.node-types`](blockdoc.node-types),
+  filled with `registerClass()` for each `Block` subclass.
+- **Correct document input before it is built**: [`blockdoc.transforms`](blockdoc.transforms),
+  filled with `DocumentTransform` classes.
+
+## How they fit together
+
+Building a document runs left to right. Generated or edited input passes through the transform
+chain, `BlockDocumentBuilder` assembles the result into blocks, resolving each top-level part by
+its node type, and the stored JSON is later hydrated back into the same typed blocks by
+`DocumentHydrator`. Node types are the vocabulary at both ends; transforms only ever touch the
+input.
+
+## What a duplicate means here
+
+The two differ on purpose. Node types **supersede**: a type name has one class, and registering it
+again replaces the class. Transforms **admit**: the chain is a list, so a transform registered twice
+runs twice, in both places.
+
+## Going deeper
+
+[The schemas cluster](https://github.com/schemastud/laravel-data-schemas/blob/main/docs/registries/schemas.mdx)
+covers the schema substrate blockdoc's blocks are Data classes of.
+[Popcorn registries](/beam/docs/foundations/registries) explains roots, keys and duplicate policies
+in general.

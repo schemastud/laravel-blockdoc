@@ -1,0 +1,97 @@
+---
+title: Block node types
+segment: blockdoc.node-types
+nav_order: 50
+excerpt: Which ProseMirror node types your application hydrates into typed Block classes.
+---
+
+# Block node types
+
+A blockdoc document is ordinary ProseMirror JSON: a tree of nodes, each with a `type`, its
+`attrs` and its `content`. `blockdoc.node-types` maps a node type to the PHP class that represents
+it, so that when a stored document is loaded, a `section` node becomes your `SectionBlock` (a typed
+spatie/laravel-data object with its own attributes) instead of a bare array.
+
+{/* registry-facts:start — generated from the #[IsRegistry] declaration by `splicewire:beam:docs:registries:scaffold`. Rerun the command; do not edit between these markers. */}
+
+- **Root:** `blockdoc.node-types`
+- **Entries:** `class-string<Schemastud\Blockdoc\Blocks\Block>`
+- **Duplicate keys:** Supersede — a later registration under a taken key replaces the earlier entry, in its place
+- **Population:** Optional — an empty registry is normal
+- **Order:** `50` (display order, ascending)
+- **Declared by:** `Schemastud\Blockdoc\Schema\NodeSchema`
+
+{/* registry-facts:end */}
+
+## Declaring a node type
+
+A node type is a `Block` subclass carrying a `#[NodeType]` attribute. The attribute gives the type
+name, an optional description and its group:
+
+```php
+use Schemastud\Blockdoc\Attributes\NodeType;
+use Schemastud\Blockdoc\Blocks\Block;
+
+#[NodeType('callout', 'A highlighted aside')]
+final class CalloutBlock extends Block
+{
+    public function __construct(
+        public string $tone = 'info',
+    ) {}
+}
+```
+
+## Registering it
+
+Nothing scans for node types. Your application decides which ones exist and registers each from a
+provider:
+
+```php
+use Schemastud\Blockdoc\Contracts\Schema;
+
+public function boot(): void
+{
+    $schema = $this->app->make(Schema::class);
+
+    foreach ([CalloutBlock::class, SectionBlock::class] as $class) {
+        $schema->registerClass($class);   // reads the name from #[NodeType]
+    }
+}
+```
+
+`registerClass()` refuses a class without the attribute. You can also name the type yourself with
+`register('callout', CalloutBlock::class)`. The container binds `Schema` and `NodeSchema` to the
+same instance, so either name reaches this registry.
+
+The duplicate policy is **supersede**: registering a type that is already taken replaces its class,
+which is how an application swaps a package's block for its own.
+
+## Type names
+
+A lowercase name such as `faq_item` is used as the key as it is. A PascalCase name, the way a JSX
+tag is spelled (`ContentOutline`), is stored under a reversible encoded key,
+`tag:content:outline`. Every public method takes and returns the name as you spelled it; only
+`keys()` shows the encoded form. Use `types()` to list node types by name.
+
+## Who reads it
+
+`DocumentHydrator` reads it for every node. A registered type is built with `YourBlock::from($attrs)`
+and gets its children hydrated beneath it. A type that is **not** registered is passed through as a
+generic node with its attributes and content intact, which is how standard ProseMirror prose
+(paragraphs, text, marks) survives without any registration.
+
+`BlockDocumentBuilder` also reads it, resolving the `opening`, `section`, `faq` and `conclusion`
+types it assembles documents from, so an application using the builder registers classes under
+those names.
+
+## Related registries
+
+- [`blockdoc.transforms`](blockdoc.transforms) — the transforms run over builder input before a
+  document is built.
+- [The blockdoc cluster](blockdoc) — how the two fit together.
+
+## Going deeper
+
+[Popcorn registries](/beam/docs/foundations/registries) explains roots, keys and duplicate policies
+in general. The registry's source is
+[`NodeSchema`](https://github.com/schemastud/laravel-blockdoc/blob/main/src/Schema/NodeSchema.php).
