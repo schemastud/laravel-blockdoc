@@ -24,9 +24,9 @@ use Schemastud\Blockdoc\Contracts\DocumentTransform;
  * (registry-kernel ticket 08 D4) — the same property, said out loud by the contract that provides it.
  *
  * `onKeyDuplicate` stays {@see OnKeyDuplicate::Admit} and that is load-bearing here, not incidental: under
- * `Supersede` a second registration of the same transform would MOVE the entry to the end of the chain,
- * where appending to an array kept both in place. For a pipeline that is a visible defect. Admit keeps
- * two live entries under one key, exactly as the old array kept two elements.
+ * `Supersede` a second registration of the same transform would replace the first in its slot, so the
+ * transform would run once where appending to an array ran it twice. Admit keeps two live entries under
+ * one key, exactly as the old array kept two elements.
  */
 #[IsRegistry(
     root: 'blockdoc.transforms',

@@ -17,7 +17,7 @@ use Schemastud\Blockdoc\Contracts\Schema;
     root: 'blockdoc.node-types',
     entryType: 'class-string<'.Block::class.'>',
     onKeyDuplicate: OnKeyDuplicate::Supersede,
-    description: 'ProseMirror node types — nodeType slug => Block class, read by the DocumentHydrator. Nothing SCANS here, despite registerClass() reading #[NodeType] off the class it is handed: the host chooses which Block classes exist and hands each one over from its provider, and the attribute only supplies the slug. A miss THROWS rather than falling back to a generic node — a document containing a type the app never registered is corrupt, not degraded.',
+    description: 'ProseMirror node types — nodeType slug => Block class, read by the DocumentHydrator. Nothing SCANS here, despite registerClass() reading #[NodeType] off the class it is handed: the host chooses which Block classes exist and hands each one over from its provider, and the attribute only supplies the slug. The DocumentHydrator does not throw on an unregistered type: it passes it through as a GenericNode, which is how standard ProseMirror prose (paragraph, text, marks) is carried. A direct resolve() miss throws, so the BlockDocumentBuilder fails when a structural type it builds (opening, section, faq, faq_item, conclusion) is unregistered, and drops an unknown embed.',
     order: 50,
 )]
 class NodeSchema implements Gated, Schema
