@@ -2,6 +2,7 @@
 
 namespace Schemastud\Blockdoc;
 
+use Rushing\Popcorn\Registries\ScopesRegistrant;
 use Schemastud\Blockdoc\Console\ExportManifestCommand;
 use Schemastud\Blockdoc\Contracts\ManifestNodeSource;
 use Schemastud\Blockdoc\Contracts\Schema;
@@ -15,6 +16,14 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class ServiceProvider extends PackageServiceProvider
 {
+    use ScopesRegistrant;
+
+    /** Every registry write in register()/boot() that names no `$by` records this package. */
+    protected function registrant(): string
+    {
+        return 'schemastud/laravel-blockdoc';
+    }
+
     public function configurePackage(Package $package): void
     {
         $package->name('laravel-blockdoc')
