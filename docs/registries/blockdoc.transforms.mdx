@@ -71,8 +71,9 @@ caller passes to `transform()`, such as the facts a transform needs to check emb
 
 ## Order is the point
 
-Registration order is the order the chain runs. The duplicate policy is **admit**, so the chain
-behaves like the list it is: registering the same transform twice keeps both entries in their
+Registration order is the order the chain runs. The
+[**duplicate-key policy**](/beam/docs/foundations/registries#key-policies) is **admit**, so the
+chain behaves like the list it is: registering the same transform twice keeps both entries in their
 places, and the transform runs twice. There is no override-by-key here. To change the chain, change
 what your providers register.
 

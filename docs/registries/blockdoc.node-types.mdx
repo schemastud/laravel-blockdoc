@@ -65,8 +65,9 @@ public function boot(): void
 `register('callout', CalloutBlock::class)`. The container binds `Schema` and `NodeSchema` to the
 same instance, so either name reaches this registry.
 
-The duplicate policy is **supersede**: registering a type that is already taken replaces its class,
-which is how an application swaps a package's block for its own.
+The [**duplicate-key policy**](/beam/docs/foundations/registries#key-policies) is
+**supersede**: registering a type that is already taken replaces its class, which is how an
+application swaps a package's block for its own.
 
 ## Type names
 

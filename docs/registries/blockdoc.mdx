@@ -27,9 +27,10 @@ input.
 
 ## What a duplicate means here
 
-The two differ on purpose. Node types **supersede**: a type name has one class, and registering it
-again replaces the class. Transforms **admit**: the chain is a list, so a transform registered twice
-runs twice, in both places.
+The two differ on purpose in their
+[**duplicate-key policy**](/beam/docs/foundations/registries#key-policies). Node types
+**supersede**: a type name has one class, and registering it again replaces the class. Transforms
+**admit**: the chain is a list, so a transform registered twice runs twice, in both places.
 
 ## Going deeper
 
